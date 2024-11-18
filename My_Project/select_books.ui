@@ -35,7 +35,7 @@
     </property>
     <property name="text">
      <string>Введите в поля ниже данные,
-чтобы найти нужный фильм
+чтобы найти нужную книгу
 (Вы можете заполнить
 только некоторые из полей):</string>
     </property>
@@ -45,7 +45,7 @@
      <rect>
       <x>10</x>
       <y>40</y>
-      <width>1000</width>
+      <width>2669</width>
       <height>31</height>
      </rect>
     </property>
@@ -387,15 +387,15 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>500</width>
+      <width>481</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>Нажмите на букву, чтобы вывести список фильмов с названием, начинающимся на неё:</string>
+     <string>Нажмите на букву, чтобы вывести список книг с названием, начинающимся на неё:</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -428,12 +428,12 @@
      <item>
       <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>Режиссёр:</string>
+        <string>Автор:</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="director"/>
+      <widget class="QLineEdit" name="author"/>
      </item>
      <item>
       <widget class="QLabel" name="label">
@@ -454,26 +454,6 @@
      </item>
      <item>
       <widget class="QComboBox" name="genre"/>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Продолжительность (мин):</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="duration"/>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_7">
-       <property name="text">
-        <string>Рейтинг:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="rating"/>
      </item>
      <item>
       <widget class="QPushButton" name="search">
