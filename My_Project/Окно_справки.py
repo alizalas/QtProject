@@ -2,8 +2,6 @@ import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow
 
-import subprocess
-
 
 class MyWidget(QMainWindow):
     def __init__(self):

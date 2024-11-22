@@ -2,7 +2,9 @@ import subprocess
 import sys
 
 from PyQt6 import uic
+from PyQt6.QtGui import QFont
 from PyQt6.QtWidgets import QApplication, QMainWindow
+import Константы
 
 
 class MyWidget(QMainWindow):
@@ -10,10 +12,11 @@ class MyWidget(QMainWindow):
         super().__init__()
         uic.loadUi('first_window.ui', self)
         # Устанавливаем фоновое изображение для всего окна
-        self.set_background_image("image5.png")
+        self.set_background_image(Константы.background_picture)
         self.books.clicked.connect(self.open_next_window)
         self.films.clicked.connect(self.open_next_window)
         self.reference.clicked.connect(self.open_next_window)
+        self.settings.clicked.connect(self.open_next_window)
 
     def set_background_image(self, image_path):
         # Устанавливаем стиль для QMainWindow с фоновым изображением
@@ -28,6 +31,11 @@ class MyWidget(QMainWindow):
                 """
         self.setStyleSheet(style_sheet)
 
+    def set_font(self, image_path):
+        new_font = QFont(self.font())
+        new_font.setPointSize(Константы.font)
+        self.setFont(new_font)
+
     def open_next_window(self):
         button_name = self.sender().objectName()
         if button_name == "books":
@@ -36,6 +44,8 @@ class MyWidget(QMainWindow):
             subprocess.run([sys.executable, 'Окно_выбора_действий_над_фильмами.py'])
         elif button_name == "reference":
             subprocess.run([sys.executable, 'Окно_справки.py'])
+        elif button_name == "settings":
+            subprocess.run([sys.executable, 'Окно_настроек.py'])
 
 def except_hook(cls, exception, traceback):
     sys.__excepthook__(cls, exception, traceback)
