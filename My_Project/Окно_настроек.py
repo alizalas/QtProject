@@ -2,7 +2,8 @@ import sys
 from PyQt6 import uic
 from PyQt6.QtGui import QPixmap, QPainter, QFont
 from PyQt6.QtWidgets import QApplication, QMainWindow, QGraphicsScene, QGraphicsPixmapItem, QGraphicsView
-import Константы
+import json
+import Базовая_визуализация
 
 
 class MyWidget(QMainWindow):
@@ -37,7 +38,7 @@ class MyWidget(QMainWindow):
         self.image_6.setScene(self.scene_6)
         self.load_image("image_6.png", 6)
 
-        self.set_font()
+        Базовая_визуализация.set_font(self)
 
     def load_image(self, image_path, n):
         # Настройка масштабирования (по желанию)
@@ -54,37 +55,35 @@ class MyWidget(QMainWindow):
         scene = getattr(self, f'scene_{n}')
         scene.addItem(pixmap_item)
 
-    def set_font(self):
-        new_font = QFont(self.font())
-        new_font.setPointSize(Константы.font)
-        self.setFont(new_font)
-
     def save_results(self):
         if self.radioButton_1.isChecked():
-            self.modify_variable_in_file("Константы.py", "background_picture", '"image_1.png"')
+            self.modify_variable_in_file("Константы.json", {"background_picture": '"image_1.png"'})
         elif self.radioButton_2.isChecked():
-            self.modify_variable_in_file("Константы.py", "background_picture", '"image_2.png"')
+            self.modify_variable_in_file("Константы.json", {"background_picture": '"image_2.png"'})
         elif self.radioButton_3.isChecked():
-            self.modify_variable_in_file("Константы.py", "background_picture", '"image_3.png"')
+            self.modify_variable_in_file("Константы.json", {"background_picture": '"image_3.png"'})
         elif self.radioButton_4.isChecked():
-            self.modify_variable_in_file("Константы.py", "background_picture", '"image_4.png"')
+            self.modify_variable_in_file("Константы.json", {"background_picture": '"image_4.png"'})
         elif self.radioButton_5.isChecked():
-            self.modify_variable_in_file("Константы.py", "background_picture", '"image_5.png"')
+            self.modify_variable_in_file("Константы.json", {"background_picture": '"image_5.png"'})
         elif self.radioButton_6.isChecked():
-            self.modify_variable_in_file("Константы.py", "background_picture", '"image_6.png"')
-        self.modify_variable_in_file("Константы.py", "font", self.changeFont.value())
-        self.set_font()
+            self.modify_variable_in_file("Константы.json", {"background_picture": '"image_6.png"'})
 
-    def modify_variable_in_file(self, filename, variable_name, new_value):
-        with open(filename, 'r') as f:
-            lines = f.readlines()
+        self.modify_variable_in_file("Константы.json", {"font": self.changeFont.value()})
 
-        with open(filename, 'w') as f:
-            for line in lines:
-                if line.startswith(variable_name + ' ='):
-                    f.write(f'{variable_name} = {new_value}\n')  # Записываем новую строку с измененным значением
-                else:
-                    f.write(line)  # Записываем остальные строки без изменений
+        Базовая_визуализация.set_font(self)
+
+    def modify_variable_in_file(self, filename, new_value):
+        # Чтение JSON-файла
+        with open(filename, 'r') as file:
+            data = json.load(file)
+
+        # Обновление констант в данных JSON-файла
+        data.update(new_value)
+
+        # Запись обновленных данных обратно в JSON-файл
+        with open(filename, 'w') as file:
+            json.dump(data, file, indent=4)
 
 
 def except_hook(cls, exception, traceback):

@@ -19,9 +19,9 @@ class MyWidget(QMainWindow):
         if button_name == "search":
             subprocess.run([sys.executable, 'Окно_для_поиска_книг.py'])
         elif button_name == "add":
-            subprocess.run([sys.executable, 'Окно_для_добавления_книг.py'])
+            subprocess.run([sys.executable, 'Окно_для_добавления_книги.py'])
         elif button_name == "changeInfo":
-            subprocess.run([sys.executable, 'Окно_для_изменения_книг.py'])
+            subprocess.run([sys.executable, 'Окно_для_изменения_книги.py'])
         else:
             subprocess.run([sys.executable, 'Окно_для_удаления_книг.py'])
 

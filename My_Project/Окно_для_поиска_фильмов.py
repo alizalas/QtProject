@@ -3,6 +3,7 @@ import sys
 
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
+import json
 
 
 class MyWidget(QMainWindow):
