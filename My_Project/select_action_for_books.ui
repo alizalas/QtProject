@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -47,9 +47,16 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="addInfo">
+      <widget class="QPushButton" name="changeInfo">
        <property name="text">
         <string>Изменить информацию о книге</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="delet">
+       <property name="text">
+        <string>Удалить книгу</string>
        </property>
       </widget>
      </item>

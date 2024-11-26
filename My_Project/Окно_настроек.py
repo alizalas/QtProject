@@ -11,7 +11,6 @@ class MyWidget(QMainWindow):
         uic.loadUi('settings.ui', self)
         self.save_changes.clicked.connect(self.save_results)
         self.changeLanguage.addItems(["Русский", "English"])
-        self.background_picture = 'image_1.png'
 
         # Создаём QGraphicsScene
         self.scene_1 = QGraphicsScene()
@@ -38,6 +37,8 @@ class MyWidget(QMainWindow):
         self.image_6.setScene(self.scene_6)
         self.load_image("image_6.png", 6)
 
+        self.set_font()
+
     def load_image(self, image_path, n):
         # Настройка масштабирования (по желанию)
         graphics_view = getattr(self, f'image_{n}')
@@ -53,27 +54,38 @@ class MyWidget(QMainWindow):
         scene = getattr(self, f'scene_{n}')
         scene.addItem(pixmap_item)
 
+    def set_font(self):
+        new_font = QFont(self.font())
+        new_font.setPointSize(Константы.font)
+        self.setFont(new_font)
+
     def save_results(self):
         if self.radioButton_1.isChecked():
-            self.background_picture = "image_1.png"
+            self.modify_variable_in_file("Константы.py", "background_picture", '"image_1.png"')
         elif self.radioButton_2.isChecked():
-            self.background_picture = "image_2.png"
+            self.modify_variable_in_file("Константы.py", "background_picture", '"image_2.png"')
         elif self.radioButton_3.isChecked():
-            self.background_picture = "image_3.png"
+            self.modify_variable_in_file("Константы.py", "background_picture", '"image_3.png"')
         elif self.radioButton_4.isChecked():
-            self.background_picture = "image_4.png"
+            self.modify_variable_in_file("Константы.py", "background_picture", '"image_4.png"')
         elif self.radioButton_5.isChecked():
-            self.background_picture = "image_5.png"
+            self.modify_variable_in_file("Константы.py", "background_picture", '"image_5.png"')
         elif self.radioButton_6.isChecked():
-            self.background_picture = "image_6.png"
+            self.modify_variable_in_file("Константы.py", "background_picture", '"image_6.png"')
+        self.modify_variable_in_file("Константы.py", "font", self.changeFont.value())
+        self.set_font()
 
-        self.change_font_size(self.changeFont.value())
+    def modify_variable_in_file(self, filename, variable_name, new_value):
+        with open(filename, 'r') as f:
+            lines = f.readlines()
 
-    def change_font_size(self, value):
-        new_font = QFont(self.font())
-        new_font.setPointSize(value)
-        self.setFont(new_font)
-        Константы.font = value
+        with open(filename, 'w') as f:
+            for line in lines:
+                if line.startswith(variable_name + ' ='):
+                    f.write(f'{variable_name} = {new_value}\n')  # Записываем новую строку с измененным значением
+                else:
+                    f.write(line)  # Записываем остальные строки без изменений
+
 
 def except_hook(cls, exception, traceback):
     sys.__excepthook__(cls, exception, traceback)
@@ -83,6 +95,5 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = MyWidget()
     ex.show()
-    picture = ex.background_picture
     sys.excepthook = except_hook
     sys.exit(app.exec())

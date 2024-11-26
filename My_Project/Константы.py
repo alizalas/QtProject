@@ -1,3 +1,3 @@
-background_picture = "image_1.png"
-font = 8
+background_picture = "image_3.png"
+font = 13
 language = "Русский"
