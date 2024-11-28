@@ -30,8 +30,7 @@ class MyWidget(QMainWindow):
         elif button_name == "settings":
             subprocess.run([sys.executable, 'Окно_настроек.py'])
         else:
-            for window in QApplication.allWindows():
-                window.close()
+            self.close()
 
 def except_hook(cls, exception, traceback):
     sys.__excepthook__(cls, exception, traceback)

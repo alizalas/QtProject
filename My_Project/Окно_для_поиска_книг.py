@@ -2,7 +2,7 @@ import sqlite3
 import sys
 
 from PyQt6 import uic
-from PyQt6.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
+from PyQt6.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QLineEdit
 
 
 class MyWidget(QMainWindow):
@@ -14,14 +14,14 @@ class MyWidget(QMainWindow):
         for i in range(1, 34):
             button = getattr(self, f'pushButton_{i}')
             button.clicked.connect(self.selection_by_letter)
-        self.genre.addItems([el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()])
+        self.genre.addItems([''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()])
 
     def selection_by_characteristics(self):
         id = self.id.text()
         title = self.title.text()
         author = self.author.text()
         year = self.year.text()
-        genre = self.genre.text()
+        genre = self.genre.currentText()
         query = "SELECT * FROM books WHERE 1=1"
 
         if id:

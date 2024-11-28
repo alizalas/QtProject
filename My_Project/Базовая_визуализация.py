@@ -24,3 +24,15 @@ def set_background_image(self):
             }}
             """
     self.setStyleSheet(style_sheet)
+
+def modify_variable_in_file(filename, new_value):
+    # Чтение JSON-файла
+    with open(filename, 'r') as file:
+        data = json.load(file)
+
+    # Обновление констант в данных JSON-файла
+    data.update(new_value)
+
+    # Запись обновленных данных обратно в JSON-файл
+    with open(filename, 'w') as file:
+        json.dump(data, file, indent=4)

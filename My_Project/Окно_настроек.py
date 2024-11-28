@@ -57,33 +57,21 @@ class MyWidget(QMainWindow):
 
     def save_results(self):
         if self.radioButton_1.isChecked():
-            self.modify_variable_in_file("Константы.json", {"background_picture": '"image_1.png"'})
+            Базовая_визуализация.modify_variable_in_file("Константы.json", {"background_picture": '"image_1.png"'})
         elif self.radioButton_2.isChecked():
-            self.modify_variable_in_file("Константы.json", {"background_picture": '"image_2.png"'})
+            Базовая_визуализация.modify_variable_in_file("Константы.json", {"background_picture": '"image_2.png"'})
         elif self.radioButton_3.isChecked():
-            self.modify_variable_in_file("Константы.json", {"background_picture": '"image_3.png"'})
+            Базовая_визуализация.modify_variable_in_file("Константы.json", {"background_picture": '"image_3.png"'})
         elif self.radioButton_4.isChecked():
-            self.modify_variable_in_file("Константы.json", {"background_picture": '"image_4.png"'})
+            Базовая_визуализация.modify_variable_in_file("Константы.json", {"background_picture": '"image_4.png"'})
         elif self.radioButton_5.isChecked():
-            self.modify_variable_in_file("Константы.json", {"background_picture": '"image_5.png"'})
+            Базовая_визуализация.modify_variable_in_file("Константы.json", {"background_picture": '"image_5.png"'})
         elif self.radioButton_6.isChecked():
-            self.modify_variable_in_file("Константы.json", {"background_picture": '"image_6.png"'})
+            Базовая_визуализация.modify_variable_in_file("Константы.json", {"background_picture": '"image_6.png"'})
 
         self.modify_variable_in_file("Константы.json", {"font": self.changeFont.value()})
 
         Базовая_визуализация.set_font(self)
-
-    def modify_variable_in_file(self, filename, new_value):
-        # Чтение JSON-файла
-        with open(filename, 'r') as file:
-            data = json.load(file)
-
-        # Обновление констант в данных JSON-файла
-        data.update(new_value)
-
-        # Запись обновленных данных обратно в JSON-файл
-        with open(filename, 'w') as file:
-            json.dump(data, file, indent=4)
 
 
 def except_hook(cls, exception, traceback):

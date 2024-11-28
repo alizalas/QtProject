@@ -7,6 +7,10 @@ class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('reference.ui', self)
+        self.returne.clicked.connect(self.go_back)
+
+    def go_back(self):
+        self.close()
 
 
 def except_hook(cls, exception, traceback):
