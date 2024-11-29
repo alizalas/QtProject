@@ -50,15 +50,18 @@
 #     ex = AdaptiveWindow()
 #     sys.exit(app.exec())
 
-
-import sqlite3
-
-con = sqlite3.connect("My_books.sqlite")
-
-cur = con.cursor()
-
-result = cur.execute("select id from authors where name = 'Достоевский Ф.М.'").fetchall()[0][0]
-
-print(result)
-
-con.close()
+#
+# import sqlite3
+#
+# con = sqlite3.connect("My_books.sqlite")
+#
+# cur = con.cursor()
+#
+# result = cur.execute("select id from authors where name = 'Достоевский Ф.М.'").fetchall()[0][0]
+#
+# print(result)
+#
+# con.close()
+author ="sdfgsdfg"
+spisok = list(map(str,list(range(14))))
+print(f'INSERT INTO authors(name) VALUES("{author}") and name in ("' + '","'.join(spisok) + '")')

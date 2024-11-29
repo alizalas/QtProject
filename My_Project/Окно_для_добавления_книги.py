@@ -30,9 +30,9 @@ class MyWidget(QMainWindow):
             query = "INSERT INTO books(title, author, year, genre) VALUES("
 
         if title:
-            query += f"{title}, "
+            query += f"'{title}', "
         else:
-            query += "'', "
+            query += f"{'NULL'}, "
 
         if author:
             try:
@@ -42,30 +42,30 @@ class MyWidget(QMainWindow):
                 self.connection.cursor().execute(f"INSERT INTO authors(name) VALUES('{author}')")
                 self.connection.commit()
                 result = int(
-                    self.connection.cursor().execute(f"select id from authors where name = {author}").fetchall()[0][0])
+                    self.connection.cursor().execute(f"select id from authors where name = ?", (author, )).fetchall()[0][0])
             finally:
-                query += f"{result}, "
+                query += f"'{result}', "
         else:
-            query += "'', "
+            query += f"{'NULL'}, "
 
         if year:
             query += f"{int(year)}, "
         else:
-            query += "'', "
+            query += f"{'NULL'}, "
 
         if genre:
             try:
                 result = int(
-                    self.connection.cursor().execute(f"select id from genres where genre = {genre}").fetchall()[0][0])
+                    self.connection.cursor().execute(f"select id from genres where genre = ?", (genre, )).fetchall()[0][0])
             except:
-                self.connection.cursor().execute(f"INSERT INTO genres(genre) VALUES({genre})")
+                self.connection.cursor().execute(f"INSERT INTO genres(genre) VALUES('{genre})'")
                 self.connection.commit()
                 result = int(
-                    self.connection.cursor().execute(f"select id from authors where name = {genre}").fetchall()[0][0])
+                    self.connection.cursor().execute(f"select id from authors where name = ?", (genre, )).fetchall()[0][0])
             finally:
-                query += f"{result}, "
+                query += f"{result})"
         else:
-            query += "'')"
+            query += f"{'NULL'})"
 
         self.connection.cursor().execute(query)
         self.connection.commit()
@@ -75,9 +75,10 @@ class MyWidget(QMainWindow):
             subprocess.run([sys.executable, 'Окно_добавления_значения.py'])
             with open("Константы.json", 'r') as file:
                 data = json.load(file)
-            print(data["signalText"])
+            #print(data["signalText"])
             self.genre.setEditable(True)
             self.genre.setCurrentText(str(data["signalText"]))
+            # self.genre.setCurrentText("Поэма")
             self.genre.setEditable(False)
 
     def closeEvent(self, event):

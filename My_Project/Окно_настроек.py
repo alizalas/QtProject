@@ -69,7 +69,7 @@ class MyWidget(QMainWindow):
         elif self.radioButton_6.isChecked():
             Базовая_визуализация.modify_variable_in_file("Константы.json", {"background_picture": '"image_6.png"'})
 
-        self.modify_variable_in_file("Константы.json", {"font": self.changeFont.value()})
+        Базовая_визуализация.modify_variable_in_file("Константы.json", {"font": self.changeFont.value()})
 
         Базовая_визуализация.set_font(self)
 

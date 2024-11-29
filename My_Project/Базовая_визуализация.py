@@ -1,5 +1,6 @@
 import json
 from PyQt6.QtGui import QFont
+from PyQt6.QtWidgets import QWidget
 
 
 def set_font(self):
@@ -8,6 +9,8 @@ def set_font(self):
     new_font = QFont(self.font())
     new_font.setPointSize(data["font"])
     self.setFont(new_font)
+    for widget in self.findChildren(QWidget):
+        widget.setFont(new_font)
 
 
 def set_background_image(self):
