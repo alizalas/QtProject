@@ -6,69 +6,59 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>257</width>
-    <height>232</height>
+    <width>250</width>
+    <height>201</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>231</width>
-      <height>171</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Вы хотите работать с  каталогом книг.
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Вы хотите работать с  каталогом книг.
 Выберите желаемое действие:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="search">
-       <property name="text">
-        <string>Найти книгу</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="add">
-       <property name="text">
-        <string>Добавить книгу</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="changeInfo">
-       <property name="text">
-        <string>Изменить информацию о книге</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="delet">
-       <property name="text">
-        <string>Удалить книгу</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="search">
+      <property name="text">
+       <string>Найти книгу</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="add">
+      <property name="text">
+       <string>Добавить книгу</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="changeInfo">
+      <property name="text">
+       <string>Изменить информацию о книге</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="delet">
+      <property name="text">
+       <string>Удалить книгу</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>257</width>
+     <width>250</width>
      <height>21</height>
     </rect>
    </property>

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>246</width>
-    <height>207</height>
+    <width>193</width>
+    <height>144</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,36 +18,17 @@
     <item>
      <widget class="QLabel" name="label">
       <property name="text">
-       <string>Вы хотите работать с  каталогом фильмов.
-Выберите желаемое действие:</string>
+       <string>Введите название нового жанра:</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="search">
-      <property name="text">
-       <string>Найти фильм</string>
-      </property>
-     </widget>
+     <widget class="QLineEdit" name="lineEdit"/>
     </item>
     <item>
-     <widget class="QPushButton" name="add">
+     <widget class="QPushButton" name="save">
       <property name="text">
-       <string>Добавить фильм</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="addInfo">
-      <property name="text">
-       <string>Изменить информацию о фильме</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="delet">
-      <property name="text">
-       <string>Удалить фильм</string>
+       <string>Сохранить</string>
       </property>
      </widget>
     </item>
@@ -58,7 +39,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>246</width>
+     <width>193</width>
      <height>21</height>
     </rect>
    </property>

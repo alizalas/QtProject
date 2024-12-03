@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>500</height>
+    <width>429</width>
+    <height>372</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>20</y>
-      <width>445</width>
-      <height>31</height>
+      <x>9</x>
+      <y>9</y>
+      <width>407</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -35,10 +35,10 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>80</y>
-      <width>160</width>
-      <height>16</height>
+      <x>10</x>
+      <y>60</y>
+      <width>151</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -50,11 +50,37 @@
      <string> Выберите нужный каталог:</string>
     </property>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>220</y>
+      <x>10</x>
+      <y>90</y>
+      <width>146</width>
+      <height>73</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QPushButton" name="books">
+       <property name="text">
+        <string>Книги</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="films">
+       <property name="text">
+        <string>Фильмы</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>240</y>
       <width>77</width>
       <height>83</height>
      </rect>
@@ -83,39 +109,13 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>110</y>
-      <width>131</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QPushButton" name="books">
-       <property name="text">
-        <string>Книги</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="films">
-       <property name="text">
-        <string>Фильмы</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>500</width>
+     <width>429</width>
      <height>21</height>
     </rect>
    </property>

@@ -16,10 +16,9 @@ class MyWidget(QMainWindow):
     def click_handling(self):
         button_name = self.sender().objectName()
         if button_name == "search":
-            # Запускаем второй файл и завершаем текущий процесс
             subprocess.run([sys.executable, 'Окно_для_поиска_фильмов.py'])
         elif button_name == "add":
-            pass
+            subprocess.run([sys.executable, 'Окно_для_добавления_фильма.py'])
         else:
             pass
 

@@ -9,7 +9,7 @@ import Базовая_визуализация
 class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('first_window1.ui', self)
+        uic.loadUi('first_window.ui', self)
         Базовая_визуализация.set_background_image(self)
         Базовая_визуализация.set_font(self)
         self.books.clicked.connect(self.open_next_window)
