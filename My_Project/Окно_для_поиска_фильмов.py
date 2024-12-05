@@ -56,16 +56,20 @@ class MyWidget(QMainWindow):
         self.realisation(self.connection.cursor().execute(query).fetchall())
 
     def realisation(self, res):
-        self.tableWidget.setColumnCount(7)
-        self.tableWidget.setRowCount(0)
-        self.tableWidget.setHorizontalHeaderLabels(['id', 'title', 'director', 'year', 'genre', 'duration', 'rating'])
+        if res:
+            self.tableWidget.setColumnCount(7)
+            self.tableWidget.setRowCount(0)
+            self.tableWidget.setHorizontalHeaderLabels(['id', 'title', 'director', 'year', 'genre', 'duration', 'rating'])
 
-        for i, row in enumerate(res):
-            self.tableWidget.setRowCount(
-                self.tableWidget.rowCount() + 1)
-            for j, elem in enumerate(row):
-                self.tableWidget.setItem(
-                    i, j, QTableWidgetItem(str(elem)))
+            for i, row in enumerate(res):
+                self.tableWidget.setRowCount(
+                    self.tableWidget.rowCount() + 1)
+                for j, elem in enumerate(row):
+                    self.tableWidget.setItem(
+                        i, j, QTableWidgetItem(str(elem)))
+            self.table.resizeColumnsToContents()
+        else:
+            self.statusBar().showMessage('Ничего не нашлось')
 
     def closeEvent(self, event):
         self.connection.close()

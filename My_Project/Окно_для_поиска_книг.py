@@ -2,7 +2,7 @@ import sqlite3
 import sys
 
 from PyQt6 import uic
-from PyQt6.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QLineEdit
+from PyQt6.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QLineEdit, QPushButton
 
 
 class MyWidget(QMainWindow):
@@ -46,16 +46,31 @@ class MyWidget(QMainWindow):
         self.realisation(self.connection.cursor().execute(query).fetchall())
 
     def realisation(self, res):
-        self.tableWidget.setColumnCount(5)
-        self.tableWidget.setRowCount(0)
-        self.tableWidget.setHorizontalHeaderLabels(['id', 'title', 'author', 'year', 'genre'])
+        row = self.table.rowCount()
+        edit = QPushButton("Редактировать")
+        edit.clicked.connect(
+            lambda checked, row=row: self.edit_film(row))  # Передача номера строки через лямбда-функцию
+        self.table.setCellWidget(row, 3, edit)
 
-        for i, row in enumerate(res):
-            self.tableWidget.setRowCount(
-                self.tableWidget.rowCount() + 1)
-            for j, elem in enumerate(row):
-                self.tableWidget.setItem(
-                    i, j, QTableWidgetItem(str(elem)))
+        delete = QPushButton("Удалить")
+        delete.clicked.connect(
+            lambda checked, row=row: self.delete_film(row))  # Передача номера строки через лямбда-функцию
+        self.table.setCellWidget(row, 4, delete)
+        if res:
+            self.tableWidget.setColumnCount(7)
+            self.tableWidget.setRowCount(0)
+            self.tableWidget.setHorizontalHeaderLabels(['id', 'title', 'author', 'year', 'genre', 'редактировать', 'удалить'])
+
+            for i, row in enumerate(res):
+                self.tableWidget.setRowCount(
+                    self.tableWidget.rowCount() + 1)
+                for j, elem in enumerate(row):
+                    self.tableWidget.setItem(
+                        i, j, QTableWidgetItem(str(elem)))
+
+            self.table.resizeColumnsToContents()
+        else:
+            self.statusBar().showMessage('Ничего не нашлось')
 
     def closeEvent(self, event):
         self.connection.close()

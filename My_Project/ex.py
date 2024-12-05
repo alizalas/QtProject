@@ -62,6 +62,69 @@
 # print(result)
 #
 # con.close()
-author ="sdfgsdfg"
-spisok = list(map(str,list(range(14))))
-print(f'INSERT INTO authors(name) VALUES("{author}") and name in ("' + '","'.join(spisok) + '")')
+# author ="sdfgsdfg"
+# spisok = list(map(str,list(range(14))))
+# print(f'INSERT INTO authors(name) VALUES("{author}") and name in ("' + '","'.join(spisok) + '")')
+
+
+
+from PyQt6.QtWidgets import QApplication, QMainWindow, QTableWidget, QTableWidgetItem, QPushButton, QVBoxLayout, QWidget
+from PyQt6.QtCore import Qt
+
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.table = QTableWidget()
+        self.table.setColumnCount(5)  # 5 колонок: данные + редактировать + удалить
+        self.table.setHorizontalHeaderLabels(["Название", "Год", "Режиссер", " ", " "])
+        self.table.setRowCount(0) # Начальное количество строк 0
+
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.table)
+        central_widget = QWidget()
+        central_widget.setLayout(layout)
+        self.setCentralWidget(central_widget)
+
+        self.add_film("Фильм 1", 2020, "Режиссер 1")
+        self.add_film("Фильм 2", 2021, "Режиссер 2")
+        self.add_film("Фильм 3", 2022, "Режиссер 3")
+
+
+
+    def add_film(self, title, year, director):
+        row = self.table.rowCount()
+        self.table.insertRow(row)
+
+        self.table.setItem(row, 0, QTableWidgetItem(title))
+        self.table.setItem(row, 1, QTableWidgetItem(str(year)))
+        self.table.setItem(row, 2, QTableWidgetItem(director))
+
+        edit_button = QPushButton("Редактировать")
+        edit_button.clicked.connect(lambda checked, row=row: self.edit_film(row)) # Передача номера строки через лямбда-функцию
+        self.table.setCellWidget(row, 3, edit_button)
+
+        delete_button = QPushButton("Удалить")
+        delete_button.clicked.connect(lambda checked, row=row: self.delete_film(row)) # Передача номера строки через лямбда-функцию
+        self.table.setCellWidget(row, 4, delete_button)
+
+        self.table.resizeColumnsToContents() # Автоматически подгоняет размер колонок
+
+
+    def edit_film(self, row):
+        print(f"Редактирование фильма в строке {row}")
+        # Здесь реализуйте логику редактирования фильма
+        # Например, откройте диалоговое окно для редактирования данных
+
+    def delete_film(self, row):
+        print(f"Удаление фильма в строке {row}")
+        self.table.removeRow(row)
+        # Здесь реализуйте логику удаления фильма
+
+
+
+app = QApplication([])
+window = MainWindow()
+window.show()
+app.exec()

@@ -5,11 +5,51 @@ from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow
 import Базовая_визуализация
 
+#
+# from PyQt6.QtWidgets import QApplication, QLabel, QWidget, QLineEdit, QPushButton, QVBoxLayout
+# from PyQt6.QtCore import Qt
+#
+# class MyWidget(QWidget):
+#     def init(self):
+#         super().init()
+#         self.initUI()
+#
+#     def initUI(self):
+#         self.setWindowTitle("Пример с Tooltip PyQt")
+#
+#         label = QLabel("Наведите на меня!")
+#         label.setToolTip("Это подсказка для метки.")
+#
+#         entry = QLineEdit()
+#         entry.setToolTip("Введите ваше имя здесь.")
+#
+#
+#         button = QPushButton("Кнопка")
+#         button.setToolTip("Нажмите для выполнения действия.")
+#
+#         layout = QVBoxLayout()
+#         layout.addWidget(label)
+#         layout.addWidget(entry)
+#         layout.addWidget(button)
+#
+#         self.setLayout(layout)
+#
+#
+# if name == 'main':
+#     app = QApplication([])
+#     window = MyWidget()
+#     window.show()
+#     app.exec()
 
 class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('first_window.ui', self)
+        self.setWindowTitle("Начальное_окно")
+        self.reference.setToolTip("Введите ваше имя здесь.")
+        self.settings.setToolTip("Введите ваше имя здесь.")
+        self.exit.setToolTip("Введите ваше имя здесь.")
+        self.reference.setToolTip("Введите ваше имя здесь.")
         Базовая_визуализация.set_background_image(self)
         Базовая_визуализация.set_font(self)
         self.books.clicked.connect(self.open_next_window)
