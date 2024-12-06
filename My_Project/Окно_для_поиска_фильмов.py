@@ -67,7 +67,7 @@ class MyWidget(QMainWindow):
                 for j, elem in enumerate(row):
                     self.tableWidget.setItem(
                         i, j, QTableWidgetItem(str(elem)))
-            self.table.resizeColumnsToContents()
+            self.tableWidget.resizeColumnsToContents()
         else:
             self.statusBar().showMessage('Ничего не нашлось')
 

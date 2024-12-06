@@ -1,8 +1,10 @@
 import sqlite3
+import subprocess
 import sys
 
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow, QTableWidgetItem, QLineEdit, QPushButton
+import Базовая_визуализация
 
 
 class MyWidget(QMainWindow):
@@ -46,16 +48,6 @@ class MyWidget(QMainWindow):
         self.realisation(self.connection.cursor().execute(query).fetchall())
 
     def realisation(self, res):
-        row = self.table.rowCount()
-        edit = QPushButton("Редактировать")
-        edit.clicked.connect(
-            lambda checked, row=row: self.edit_film(row))  # Передача номера строки через лямбда-функцию
-        self.table.setCellWidget(row, 3, edit)
-
-        delete = QPushButton("Удалить")
-        delete.clicked.connect(
-            lambda checked, row=row: self.delete_film(row))  # Передача номера строки через лямбда-функцию
-        self.table.setCellWidget(row, 4, delete)
         if res:
             self.tableWidget.setColumnCount(7)
             self.tableWidget.setRowCount(0)
@@ -64,13 +56,40 @@ class MyWidget(QMainWindow):
             for i, row in enumerate(res):
                 self.tableWidget.setRowCount(
                     self.tableWidget.rowCount() + 1)
+
+                num = self.tableWidget.rowCount() - 1
+
+                edit = QPushButton("Редактировать", self)
+                edit.clicked.connect(
+                    lambda checked, num=num: self.edit_film(num))  # Передача номера строки через лямбда-функцию
+                self.tableWidget.setCellWidget(num, 5, edit)
+
+                delete = QPushButton("Удалить")
+                delete.clicked.connect(
+                    lambda checked, num=num: self.delete_film(num))  # Передача номера строки через лямбда-функцию
+                self.tableWidget.setCellWidget(num, 6, delete)
+
                 for j, elem in enumerate(row):
                     self.tableWidget.setItem(
                         i, j, QTableWidgetItem(str(elem)))
 
-            self.table.resizeColumnsToContents()
+            self.tableWidget.resizeColumnsToContents()
         else:
             self.statusBar().showMessage('Ничего не нашлось')
+
+    def edit_film(self, num):
+        print(f"Редактирование фильма в строке {num}")
+        row_values = [self.tableWidget.item(num, col).text() for col in range(5)]
+        Базовая_визуализация.modify_variable_in_file("Константы.json", {"changeBook": row_values})
+        #subprocess.run([sys.executable, 'Окно_для_изменения_книги2.py'])
+        # Здесь реализуйте логику редактирования фильма
+        # Например, откройте диалоговое окно для редактирования данных
+
+    def delete_film(self, num):
+        print(f"Удаление фильма в строке {num}")
+        row_values = [self.tableWidget.item(num, col).text() for col in range(5)]
+        self.tableWidget.removeRow(num)
+        # Здесь реализуйте логику удаления фильма
 
     def closeEvent(self, event):
         self.connection.close()
