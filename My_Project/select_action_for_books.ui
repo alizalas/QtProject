@@ -17,6 +17,9 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="label">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
       <property name="text">
        <string>Вы хотите работать с  каталогом книг.
 Выберите желаемое действие:</string>
@@ -26,7 +29,9 @@
     <item>
      <widget class="QPushButton" name="search">
       <property name="text">
-       <string>Найти книгу</string>
+       <string>Найти книгу
+Изменить информацию о книге
+Удалить книгу</string>
       </property>
      </widget>
     </item>
@@ -34,20 +39,6 @@
      <widget class="QPushButton" name="add">
       <property name="text">
        <string>Добавить книгу</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="changeInfo">
-      <property name="text">
-       <string>Изменить информацию о книге</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="delet">
-      <property name="text">
-       <string>Удалить книгу</string>
       </property>
      </widget>
     </item>

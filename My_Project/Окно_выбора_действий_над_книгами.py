@@ -11,19 +11,13 @@ class MyWidget(QMainWindow):
         uic.loadUi('select_action_for_books.ui', self)
         self.search.clicked.connect(self.click_handling)
         self.add.clicked.connect(self.click_handling)
-        self.changeInfo.clicked.connect(self.click_handling)
-        self.delet.clicked.connect(self.click_handling)
 
     def click_handling(self):
         button_name = self.sender().objectName()
         if button_name == "search":
             subprocess.run([sys.executable, 'Окно_для_поиска_книг.py'])
-        elif button_name == "add":
-            subprocess.run([sys.executable, 'Окно_для_добавления_книги.py'])
-        elif button_name == "changeInfo":
-            subprocess.run([sys.executable, 'Окно_для_изменения_книги.py'])
         else:
-            subprocess.run([sys.executable, 'Окно_для_удаления_книг.py'])
+            subprocess.run([sys.executable, 'Окно_для_добавления_книги.py'])
 
 
 def except_hook(cls, exception, traceback):

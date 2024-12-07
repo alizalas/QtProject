@@ -13,9 +13,10 @@ class MyWidget(QMainWindow):
         super().__init__()
         uic.loadUi('add_book.ui', self)
         self.connection = sqlite3.connect("My_books.sqlite")
-        self.add.clicked.connect(self.add_book)
+
         self.genre.addItems([''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()] + ["Другое..."])
         self.other.clicked.connect(self.add_item)
+        self.add.clicked.connect(self.add_book)
 
     def add_book(self):
         title = self.title.text()
@@ -26,7 +27,7 @@ class MyWidget(QMainWindow):
         if title:
             query = f"INSERT INTO books(title, author, year, genre) VALUES('{title}', "
         else:
-            query = f"INSERT INTO books(title, author, year, genre) VALUES({'NULL'}, "
+            query = f"INSERT INTO books(title, author, year, genre) VALUES({''}, "
 
         if author:
             try:
@@ -38,41 +39,32 @@ class MyWidget(QMainWindow):
                 result = int(
                     self.connection.cursor().execute(f"select id from authors where name = ?", (author, )).fetchall()[0][0])
             finally:
-                query += f"'{result}', "
+                query += f"{result}, "
         else:
-            query += f"{'NULL'}, "
+            query += f"{0}, "
 
         if year:
             query += f"{int(year)}, "
         else:
-            query += f"{'NULL'}, "
+            query += f"{0}, "
 
         if genre:
             result = int(
                     self.connection.cursor().execute(f"select id from genres where genre = ?", (genre, )).fetchall()[0][0])
             query += f"{result})"
         else:
-            query += f"{'NULL'})"
+            query += f"{0})"
 
         self.connection.cursor().execute(query)
         self.connection.commit()
         self.close()
 
     def add_item(self):
-        subprocess.run([sys.executable, 'Окно_добавления_значения.py'])
-        with open("Константы.json", 'r') as file:
-            data = json.load(file)
-        self.genre.addItems([str(data["signalText"])])
-        self.connection.cursor().execute(f"INSERT INTO genres(genre) VALUES('{data['signalText']}')")
-        self.connection.commit()
+        Базовая_визуализация.add_item(self)
 
     def closeEvent(self, event):
         self.connection.close()
 
-
-def signal(text):
-    print(text)
-    Базовая_визуализация.modify_variable_in_file("Константы.json", {"signalText": text})
 
 def except_hook(cls, exception, traceback):
     sys.__excepthook__(cls, exception, traceback)

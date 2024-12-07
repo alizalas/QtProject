@@ -29,8 +29,8 @@
      <rect>
       <x>10</x>
       <y>40</y>
-      <width>2669</width>
-      <height>31</height>
+      <width>1000</width>
+      <height>30</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -371,9 +371,12 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>481</width>
+      <width>441</width>
       <height>16</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
      <string>Нажмите на букву, чтобы вывести список книг с названием, начинающимся на неё:</string>
@@ -391,6 +394,9 @@
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QLabel" name="label_8">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
        <property name="text">
         <string>Введите в поля ниже данные,
 чтобы найти нужную книгу
@@ -415,6 +421,9 @@
      </item>
      <item>
       <widget class="QLabel" name="label_2">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
        <property name="text">
         <string>Название:</string>
        </property>
@@ -439,6 +448,9 @@
      </item>
      <item>
       <widget class="QLabel" name="label_5">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
        <property name="text">
         <string>Автор:</string>
        </property>
@@ -463,6 +475,9 @@
      </item>
      <item>
       <widget class="QLabel" name="label">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
        <property name="text">
         <string>Год:</string>
        </property>
@@ -487,6 +502,9 @@
      </item>
      <item>
       <widget class="QLabel" name="label_6">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
        <property name="text">
         <string>Жанр:</string>
        </property>
