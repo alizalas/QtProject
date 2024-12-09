@@ -51,12 +51,12 @@ def realisation(self, res, headers, col_num):
 
             edit = QPushButton("Редактировать", self)
             edit.clicked.connect(
-                lambda checked, num: edit(self, num, col_num))  # Передача номера строки через лямбда-функцию
+                lambda checked, num=num: edit_row(self, num, col_num))  # Передача номера строки через лямбда-функцию
             self.tableWidget.setCellWidget(num, col_num, edit)
 
             delete = QPushButton("Удалить")
             delete.clicked.connect(
-                lambda checked, num: delete(self, num, col_num))  # Передача номера строки через лямбда-функцию
+                lambda checked, num=num: delete_row(self, num, col_num))  # Передача номера строки через лямбда-функцию
             self.tableWidget.setCellWidget(num, col_num + 1, delete)
 
             for j, elem in enumerate(row):
@@ -67,13 +67,13 @@ def realisation(self, res, headers, col_num):
     else:
         self.statusBar().showMessage('Ничего не нашлось')
 
-def edit(self, num, col_num):
+def edit_row(self, num, col_num):
     print(f"Редактирование в строке {num}")
     row_values = [self.tableWidget.item(num, col).text() for col in range(col_num)]
-    modify_variable_in_file("Константы.json", {"change": row_values})
+    modify_variable_in_file({"change": row_values})
     subprocess.run([sys.executable, 'Окно_для_изменения_книги.py'])
 
-def delete(self, num, col_num):
+def delete_row(self, num, col_num):
     print(f"Удаление фильма в строке {num}")
     row_values = [self.tableWidget.item(num, col).text() for col in range(col_num)]
     valid = QMessageBox.question(

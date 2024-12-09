@@ -70,7 +70,6 @@ class MyWidget(QMainWindow):
 
         Базовая_визуализация.modify_variable_in_file({"font": self.changeFont.value()})
         Базовая_визуализация.set_font(self)
-        subprocess.run(f"taskkill /im 'Начальное_окно'", shell=True)
         self.close()
 
 def except_hook(cls, exception, traceback):
