@@ -41,7 +41,7 @@ class MyWidget(QMainWindow):
             query += f" AND books.year = {int(year)}"
 
         if genre:
-            query += f" AND genres.genre = '{genre}')"
+            query += f" AND genres.genre = '{genre}'"
 
         self.realisation(self.connection.cursor().execute(query).fetchall())
 
@@ -50,11 +50,11 @@ class MyWidget(QMainWindow):
                      FROM books 
                      LEFT JOIN authors ON authors.id = books.author
                      LEFT JOIN genres ON genres.id = books.genre
-                     WHERE title like '{self.sender().text()}%'"""
+                     WHERE books.title like '{self.sender().text()}%'"""
         self.realisation(self.connection.cursor().execute(query).fetchall())
 
     def realisation(self, res):
-        headers = ['id', 'title', 'author', 'year', 'genre']
+        headers = ['id', 'название', 'автор', 'год', 'жанр']
         Базовая_визуализация.realisation(self, res, headers, 5)
 
     def closeEvent(self, event):

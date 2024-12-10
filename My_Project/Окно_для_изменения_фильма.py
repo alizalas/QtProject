@@ -15,24 +15,17 @@ class MyWidget(QMainWindow):
         with open("Константы.json", 'r') as file:
             data = json.load(file)
         self.change = data["change"]
-        title = self.title.text()
-        director = self.director.text()
-        year = self.year.text()
-        genre = self.genre.currentText()
-        duration = self.duration.text()
-        rating = self.rating.currentText()
+
         self.title.setText(self.change[1])
-        self.director.setText(self.connection.cursor().execute("SELECT name FROM directors where id = ?", (self.change[2], )).fetchall()[0][0])
+        self.director.setText(self.change[2])
         self.year.setText(self.change[3])
         spisok1 = [''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()]
         self.genre.addItems(spisok1)
-        genre = self.connection.cursor().execute("SELECT genre FROM genres where id = ?", (self.change[4], )).fetchall()[0][0]
-        self.genre.setCurrentIndex(spisok1.index(genre))
+        self.genre.setCurrentIndex(spisok1.index(self.change[4]))
         self.duration.setText(self.change[5])
         spisok2 = ['', '1', '2', '3', '4', '5']
         self.rating.addItems(spisok2)
-        genre = self.connection.cursor().execute("SELECT genre FROM genres where id = ?", (self.change[4],)).fetchall()[0][0]
-        self.rating.setCurrentIndex(spisok2.index(genre))
+        self.rating.setCurrentIndex(spisok2.index(self.change[6]))
 
         self.other.clicked.connect(self.add_items)
         self.save.clicked.connect(self.save_result)
@@ -42,15 +35,16 @@ class MyWidget(QMainWindow):
 
     def save_result(self):
         title = self.title.text()
-        author = int(self.connection.cursor().execute("SELECT id FROM authors where name = ?", (self.author.text(), )).fetchall()[0][0])
+        director = int(self.connection.cursor().execute("SELECT id FROM authors where name = ?", (self.director.text(), )).fetchall()[0][0])
         year = int(self.year.text())
         genre = int(self.connection.cursor().execute("SELECT id FROM genres where genre = ?", (self.genre.currentText(), )).fetchall()[0][0])
+        duration = int(self.duration.text())
+        rating = int(self.rating.currentText())
 
-        spisok1 = [title, author, year, genre]
-        spisok2 = ['title', 'author', 'year', 'genre']
-        query = "UPDATE books SET\n"
-        query += ", ".join([f"{key}={spisok1[spisok2.index(key)]}"
-                          for key in spisok2])
+        spisok1 = [title, director, year, genre, duration, rating]
+        spisok2 = ['title', 'director', 'year', 'genre', 'duration', 'rating']
+        query = f"""UPDATE films SET
+        title = '{title}', author = {author}, year = {year}, genre = {genre} WHERE id = ?"""
         query += "WHERE id = ?"
         print(query)
         self.connection.cursor().execute(query, (int(self.change[0]), ))

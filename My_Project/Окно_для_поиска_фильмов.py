@@ -29,34 +29,42 @@ class MyWidget(QMainWindow):
         genre = self.genre.currentText()
         duration = self.duration.text()
         rating = self.rating.currentText()
-        query = "SELECT * FROM films WHERE 1=1"
+        query = """SELECT films.id, films.title, directors.name, films.year, genres.genre, films.duration, films.rating 
+                     FROM films 
+                     LEFT JOIN directors ON directors.id = films.director
+                     LEFT JOIN genres ON genres.id = films.genre
+                     WHERE 1=1"""
 
         if title:
-            query += f" AND title = '{title}'"
+            query += f" AND films.title = '{title}'"
 
         if director:
-            query += f" AND director = (select id from directors where name = '{director}')"
+            query += f" AND directors.name = '{director}'"
 
         if year:
-            query += f" AND year = {int(year)}"
+            query += f" AND films.year = {int(year)}"
 
         if genre:
-            query += f" AND genre = (select id from genres where genre = '{genre}')"
+            query += f" AND genres.genre = '{genre}'"
 
         if duration:
-            query += f" AND duration = {int(duration)}"
+            query += f" AND films.duration = {int(duration)}"
 
         if rating:
-            query += f" AND rating = {int(rating)}"
+            query += f" AND films.rating = {int(rating)}"
 
         self.realisation(self.connection.cursor().execute(query).fetchall())
 
     def selection_by_letter(self):
-        query = f"SELECT * FROM films WHERE title like '{self.sender().text()}%'"
+        query = f"""SELECT films.id, films.title, directors.name, films.year, genres.genre, films.duration, films.rating 
+                     FROM films 
+                     LEFT JOIN directors ON directors.id = films.director
+                     LEFT JOIN genres ON genres.id = films.genre
+                     WHERE films.title like '{self.sender().text()}%'"""
         self.realisation(self.connection.cursor().execute(query).fetchall())
 
     def realisation(self, res):
-        headers = ['id', 'title', 'director', 'year', 'genre', 'duration', 'rating']
+        headers = ['id', 'название', 'режиссёр', 'год', 'жанр', 'продолжительность', 'рейтинг']
         Базовая_визуализация.realisation(self, res, headers, 7)
 
     def closeEvent(self, event):
