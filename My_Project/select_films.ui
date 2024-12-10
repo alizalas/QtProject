@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1060</width>
-    <height>810</height>
+    <width>1050</width>
+    <height>755</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,26 +18,10 @@
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>140</y>
+      <y>100</y>
       <width>821</width>
       <height>601</height>
      </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_8">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>170</y>
-      <width>161</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Введите в поля ниже данные,
-чтобы найти нужный фильм
-(Вы можете заполнить
-только некоторые из полей):</string>
     </property>
    </widget>
    <widget class="QWidget" name="layoutWidget">
@@ -46,7 +30,7 @@
       <x>10</x>
       <y>40</y>
       <width>1000</width>
-      <height>31</height>
+      <height>30</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -391,32 +375,41 @@
       <height>16</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
     <property name="text">
      <string>Нажмите на букву, чтобы вывести список фильмов с названием, начинающимся на неё:</string>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>240</y>
-      <width>173</width>
-      <height>501</height>
+      <y>100</y>
+      <width>191</width>
+      <height>601</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QLabel" name="label_4">
+      <widget class="QLabel" name="label_8">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
        <property name="text">
-        <string>ID:</string>
+        <string>Введите в поля ниже данные,
+чтобы найти нужный фильм
+(Вы можете заполнить
+только некоторые из полей):</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="id"/>
-     </item>
-     <item>
       <widget class="QLabel" name="label_2">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
        <property name="text">
         <string>Название:</string>
        </property>
@@ -427,6 +420,9 @@
      </item>
      <item>
       <widget class="QLabel" name="label_5">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
        <property name="text">
         <string>Режиссёр:</string>
        </property>
@@ -437,6 +433,9 @@
      </item>
      <item>
       <widget class="QLabel" name="label">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
        <property name="text">
         <string>Год:</string>
        </property>
@@ -447,6 +446,9 @@
      </item>
      <item>
       <widget class="QLabel" name="label_6">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
        <property name="text">
         <string>Жанр:</string>
        </property>
@@ -457,6 +459,9 @@
      </item>
      <item>
       <widget class="QLabel" name="label_3">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
        <property name="text">
         <string>Продолжительность (мин):</string>
        </property>
@@ -467,6 +472,9 @@
      </item>
      <item>
       <widget class="QLabel" name="label_7">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 255, 255);</string>
+       </property>
        <property name="text">
         <string>Рейтинг:</string>
        </property>
@@ -474,6 +482,20 @@
      </item>
      <item>
       <widget class="QComboBox" name="rating"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_10">
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="search">
@@ -490,7 +512,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1060</width>
+     <width>1050</width>
      <height>21</height>
     </rect>
    </property>

@@ -1,10 +1,8 @@
-import json
 import sqlite3
 import sys
 
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow
-import subprocess
 import Базовая_визуализация
 
 
@@ -13,10 +11,12 @@ class MyWidget(QMainWindow):
         super().__init__()
         uic.loadUi('add_film.ui', self)
         self.connection = sqlite3.connect("My_films.sqlite")
-        self.add.clicked.connect(self.add_film)
+
         self.genre.addItems([''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()])
-        self.other.clicked.connect(self.add_item)
         self.rating.addItems(['', '1', '2', '3', '4', '5'])
+
+        self.other.clicked.connect(self.add_item)
+        self.add.clicked.connect(self.add_film)
 
     def add_film(self):
         title = self.title.text()
@@ -72,19 +72,11 @@ class MyWidget(QMainWindow):
         self.close()
 
     def add_item(self):
-        subprocess.run([sys.executable, 'Окно_добавления_значения.py'])
-        with open("Константы.json", 'r') as file:
-            data = json.load(file)
-        self.genre.addItems([str(data["signalText"])])
-        self.connection.cursor().execute(f"INSERT INTO genres(genre) VALUES('{data['signalText']}')")
-        self.connection.commit()
+        Базовая_визуализация.add_item(self)
 
     def closeEvent(self, event):
         self.connection.close()
 
-
-def signal(text):
-    Базовая_визуализация.modify_variable_in_file("Константы.json", {"signalText": text})
 
 def except_hook(cls, exception, traceback):
     sys.__excepthook__(cls, exception, traceback)

@@ -17,6 +17,9 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="label_8">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
       <property name="text">
        <string>Введите в поля ниже данные,
 чтобы добавить новый фильм
@@ -27,6 +30,9 @@
     </item>
     <item>
      <widget class="QLabel" name="label_2">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
       <property name="text">
        <string>Название:</string>
       </property>
@@ -37,6 +43,9 @@
     </item>
     <item>
      <widget class="QLabel" name="label_5">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
       <property name="text">
        <string>Режиссёр:</string>
       </property>
@@ -47,6 +56,9 @@
     </item>
     <item>
      <widget class="QLabel" name="label">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
       <property name="text">
        <string>Год:</string>
       </property>
@@ -57,6 +69,9 @@
     </item>
     <item>
      <widget class="QLabel" name="label_6">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
       <property name="text">
        <string>Жанр:</string>
       </property>
@@ -74,6 +89,9 @@
     </item>
     <item>
      <widget class="QLabel" name="label_3">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
       <property name="text">
        <string>Продолжительность (мин):</string>
       </property>
@@ -84,6 +102,9 @@
     </item>
     <item>
      <widget class="QLabel" name="label_7">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
       <property name="text">
        <string>Рейтинг:</string>
       </property>
@@ -93,17 +114,18 @@
      <widget class="QComboBox" name="rating"/>
     </item>
     <item>
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string/>
       </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>40</height>
-       </size>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_9">
+      <property name="text">
+       <string/>
       </property>
-     </spacer>
+     </widget>
     </item>
     <item>
      <widget class="QPushButton" name="add">

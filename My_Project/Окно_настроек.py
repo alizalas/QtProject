@@ -1,8 +1,8 @@
+import subprocess
 import sys
 from PyQt6 import uic
-from PyQt6.QtGui import QPixmap, QPainter, QFont
+from PyQt6.QtGui import QPixmap, QPainter
 from PyQt6.QtWidgets import QApplication, QMainWindow, QGraphicsScene, QGraphicsPixmapItem, QGraphicsView
-import json
 import Базовая_визуализация
 
 
@@ -48,7 +48,6 @@ class MyWidget(QMainWindow):
         graphics_view.setResizeAnchor(QGraphicsView.ViewportAnchor.AnchorUnderMouse)
         graphics_view.setTransformationAnchor(QGraphicsView.ViewportAnchor.AnchorUnderMouse)
 
-        """Загружает изображение и добавляет его в сцену."""
         pixmap = QPixmap(image_path)
         # Создаём QGraphicsPixmapItem и добавляем в сцену
         pixmap_item = QGraphicsPixmapItem(pixmap)
@@ -57,22 +56,21 @@ class MyWidget(QMainWindow):
 
     def save_results(self):
         if self.radioButton_1.isChecked():
-            Базовая_визуализация.modify_variable_in_file("Константы.json", {"background_picture": '"image_1.png"'})
+            Базовая_визуализация.modify_variable_in_file({"background_picture": '"image_1.png"'})
         elif self.radioButton_2.isChecked():
-            Базовая_визуализация.modify_variable_in_file("Константы.json", {"background_picture": '"image_2.png"'})
+            Базовая_визуализация.modify_variable_in_file({"background_picture": '"image_2.png"'})
         elif self.radioButton_3.isChecked():
-            Базовая_визуализация.modify_variable_in_file("Константы.json", {"background_picture": '"image_3.png"'})
+            Базовая_визуализация.modify_variable_in_file({"background_picture": '"image_3.png"'})
         elif self.radioButton_4.isChecked():
-            Базовая_визуализация.modify_variable_in_file("Константы.json", {"background_picture": '"image_4.png"'})
+            Базовая_визуализация.modify_variable_in_file({"background_picture": '"image_4.png"'})
         elif self.radioButton_5.isChecked():
-            Базовая_визуализация.modify_variable_in_file("Константы.json", {"background_picture": '"image_5.png"'})
+            Базовая_визуализация.modify_variable_in_file({"background_picture": '"image_5.png"'})
         elif self.radioButton_6.isChecked():
-            Базовая_визуализация.modify_variable_in_file("Константы.json", {"background_picture": '"image_6.png"'})
+            Базовая_визуализация.modify_variable_in_file({"background_picture": '"image_6.png"'})
 
-        Базовая_визуализация.modify_variable_in_file("Константы.json", {"font": self.changeFont.value()})
-
+        Базовая_визуализация.modify_variable_in_file({"font": self.changeFont.value()})
         Базовая_визуализация.set_font(self)
-
+        self.close()
 
 def except_hook(cls, exception, traceback):
     sys.__excepthook__(cls, exception, traceback)

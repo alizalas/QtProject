@@ -17,6 +17,9 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="label">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
       <property name="text">
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Наше приложение&lt;/span&gt; создано для удобной каталогизации книг/фильмов.&lt;/p&gt;&lt;p&gt;Оно упрощает поиск нужных пользователю книг или фильмов по их описанию, предоставляет ему возможность редактирования информации о книгах и фильмах.&lt;/p&gt;&lt;p&gt;Приложение расчитано на использование библиотеками, онлайн-кинотеатрами. &lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Основные функции приложения:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;1. Занесение нужной книги/фильма в каталог (с указанием дополнительных характеристик или без них)&lt;/p&gt;&lt;p&gt;2. Изменение информации о книге/фильме&lt;/p&gt;&lt;p&gt;3. Поиск книг/фильмов по id, названию, автору/режиссёру, году написания/производства, жанру, рейтингу и продолжительности(для фильмов)&lt;/p&gt;&lt;p&gt;4. Отображение обложек книг и постеров к фильмам.&lt;/p&gt;&lt;p&gt;5. Экспорт каталога книг/фильмов в формате CSV.&lt;br/&gt;&lt;span style=&quot; font-weight:600; text-decoration: underline;&quot;&gt;&lt;br/&gt;ПРИЯТНОГО ПОЛЬЗОВАНИЯ!&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>

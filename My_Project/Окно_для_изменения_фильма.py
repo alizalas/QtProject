@@ -9,19 +9,30 @@ import Базовая_визуализация
 class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('change_book.ui', self)
-        self.connection = sqlite3.connect("My_books.sqlite")
+        uic.loadUi('change_film.ui', self)
+        self.connection = sqlite3.connect("My_films.sqlite")
 
         with open("Константы.json", 'r') as file:
             data = json.load(file)
         self.change = data["change"]
+        title = self.title.text()
+        director = self.director.text()
+        year = self.year.text()
+        genre = self.genre.currentText()
+        duration = self.duration.text()
+        rating = self.rating.currentText()
         self.title.setText(self.change[1])
-        self.author.setText(self.connection.cursor().execute("SELECT name FROM authors where id = ?", (self.change[2], )).fetchall()[0][0])
+        self.director.setText(self.connection.cursor().execute("SELECT name FROM directors where id = ?", (self.change[2], )).fetchall()[0][0])
         self.year.setText(self.change[3])
-        spisok = [''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()]
-        self.genre.addItems(spisok)
+        spisok1 = [''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()]
+        self.genre.addItems(spisok1)
         genre = self.connection.cursor().execute("SELECT genre FROM genres where id = ?", (self.change[4], )).fetchall()[0][0]
-        self.genre.setCurrentIndex(spisok.index(genre))
+        self.genre.setCurrentIndex(spisok1.index(genre))
+        self.duration.setText(self.change[5])
+        spisok2 = ['', '1', '2', '3', '4', '5']
+        self.rating.addItems(spisok2)
+        genre = self.connection.cursor().execute("SELECT genre FROM genres where id = ?", (self.change[4],)).fetchall()[0][0]
+        self.rating.setCurrentIndex(spisok2.index(genre))
 
         self.other.clicked.connect(self.add_items)
         self.save.clicked.connect(self.save_result)

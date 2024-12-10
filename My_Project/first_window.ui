@@ -15,64 +15,22 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="8" column="4">
-     <widget class="QLabel" name="label_15">
+    <item row="9" column="8">
+     <widget class="QLabel" name="label_9">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
-    <item row="9" column="3">
-     <widget class="QLabel" name="label_28">
+    <item row="5" column="9">
+     <widget class="QLabel" name="label_30">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
-    <item row="5" column="3">
-     <widget class="QLabel" name="label_25">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="2">
-     <widget class="QLabel" name="label_7">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="3">
-     <widget class="QLabel" name="label_26">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="7" column="5">
-     <widget class="QLabel" name="label_31">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="1">
-     <widget class="QLabel" name="label_20">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="8" column="1">
-     <widget class="QLabel" name="label_22">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="8" column="2">
-     <widget class="QLabel" name="label_3">
+    <item row="8" column="6">
+     <widget class="QLabel" name="label_27">
       <property name="text">
        <string/>
       </property>
@@ -85,77 +43,87 @@
       </property>
      </widget>
     </item>
-    <item row="9" column="2">
+    <item row="9" column="5">
      <widget class="QLabel" name="label_8">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
-    <item row="9" column="5">
-     <widget class="QLabel" name="label_33">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="2">
-     <widget class="QLabel" name="label_6">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="4">
+    <item row="5" column="8">
      <widget class="QLabel" name="label_13">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
-    <item row="7" column="4">
-     <widget class="QLabel" name="label_14">
+    <item row="9" column="9">
+     <widget class="QLabel" name="label_33">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
     <item row="5" column="5">
-     <widget class="QLabel" name="label_30">
+     <widget class="QLabel" name="label_6">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
-    <item row="8" column="3">
-     <widget class="QLabel" name="label_27">
+    <item row="7" column="8">
+     <widget class="QLabel" name="label_14">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
-    <item row="9" column="4">
-     <widget class="QLabel" name="label_9">
+    <item row="1" column="9">
+     <widget class="QLabel" name="label_34">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
-    <item row="8" column="5">
-     <widget class="QLabel" name="label_32">
+    <item row="1" column="6">
+     <widget class="QLabel" name="label_18">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
-    <item row="0" column="4">
+    <item row="0" column="9">
+     <widget class="QLabel" name="label_37">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QLabel" name="label_2">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string> Выберите нужный каталог:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="8">
      <widget class="QLabel" name="label_36">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
-    <item row="3" column="5">
+    <item row="8" column="9">
+     <widget class="QLabel" name="label_32">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="9">
      <widget class="QLabel" name="label_29">
       <property name="text">
        <string/>
@@ -169,29 +137,81 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="3">
+    <item row="3" column="6">
      <widget class="QLabel" name="label_24">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
-    <item row="3" column="2">
+    <item row="3" column="5">
      <widget class="QLabel" name="label_5">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
-    <item row="3" column="4">
-     <widget class="QLabel" name="label_12">
+    <item row="0" column="0" colspan="7">
+     <widget class="QLabel" name="label">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string> Добро пожаловать в приложение для удобной каталогизации книг и фильмов!</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="8">
+     <widget class="QLabel" name="label_11">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
-    <item row="1" column="4">
-     <widget class="QLabel" name="label_19">
+    <item row="2" column="5">
+     <widget class="QLabel" name="label_4">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="6">
+     <widget class="QLabel" name="label_17">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="9">
+     <widget class="QLabel" name="label_10">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="3">
+     <widget class="QLabel" name="label_39">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="4">
+     <widget class="QLabel" name="label_38">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="7">
+     <widget class="QLabel" name="label_42">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QLabel" name="label_41">
       <property name="text">
        <string/>
       </property>
@@ -201,6 +221,13 @@
      <widget class="QPushButton" name="settings">
       <property name="text">
        <string>Настройки</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="8">
+     <widget class="QLabel" name="label_19">
+      <property name="text">
+       <string/>
       </property>
      </widget>
     </item>
@@ -218,57 +245,22 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="4">
-     <widget class="QLabel" name="label_11">
+    <item row="3" column="8">
+     <widget class="QLabel" name="label_12">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
-    <item row="2" column="2">
-     <widget class="QLabel" name="label_4">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="3">
-     <widget class="QLabel" name="label_17">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="5">
-     <widget class="QLabel" name="label_10">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0" colspan="2">
-     <widget class="QLabel" name="label_2">
-      <property name="text">
-       <string> Выберите нужный каталог:</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="3">
-     <widget class="QLabel" name="label_18">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="5">
-     <widget class="QLabel" name="label_37">
+    <item row="7" column="1">
+     <widget class="QLabel" name="label_21">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
     <item row="1" column="5">
-     <widget class="QLabel" name="label_34">
+     <widget class="QLabel" name="label_16">
       <property name="text">
        <string/>
       </property>
@@ -288,24 +280,66 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="2">
-     <widget class="QLabel" name="label_16">
+    <item row="9" column="6">
+     <widget class="QLabel" name="label_28">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
-    <item row="7" column="1">
-     <widget class="QLabel" name="label_21">
+    <item row="8" column="8">
+     <widget class="QLabel" name="label_15">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
-    <item row="0" column="0" colspan="4">
-     <widget class="QLabel" name="label">
+    <item row="5" column="6">
+     <widget class="QLabel" name="label_25">
       <property name="text">
-       <string> Добро пожаловать в приложение для удобной каталогизации книг и фильмов!</string>
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="5">
+     <widget class="QLabel" name="label_7">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="9">
+     <widget class="QLabel" name="label_31">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="5">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="7" column="6">
+     <widget class="QLabel" name="label_26">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="1">
+     <widget class="QLabel" name="label_20">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="1">
+     <widget class="QLabel" name="label_22">
+      <property name="text">
+       <string/>
       </property>
      </widget>
     </item>

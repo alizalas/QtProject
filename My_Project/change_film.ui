@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>183</width>
-    <height>387</height>
+    <height>477</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,9 +17,12 @@
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <widget class="QLabel" name="label_8">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
       <property name="text">
        <string>Измените в полях ниже данные,
-чтобы редактировать книгу
+чтобы редактировать фильм
 (Вы можете изменить
 только некоторые из полей):</string>
       </property>
@@ -27,6 +30,9 @@
     </item>
     <item>
      <widget class="QLabel" name="label_2">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
       <property name="text">
        <string>Название:</string>
       </property>
@@ -37,16 +43,22 @@
     </item>
     <item>
      <widget class="QLabel" name="label_5">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
       <property name="text">
-       <string>Автор:</string>
+       <string>Режиссёр:</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="author"/>
+     <widget class="QLineEdit" name="director"/>
     </item>
     <item>
      <widget class="QLabel" name="label">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
       <property name="text">
        <string>Год:</string>
       </property>
@@ -57,6 +69,9 @@
     </item>
     <item>
      <widget class="QLabel" name="label_6">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
       <property name="text">
        <string>Жанр:</string>
       </property>
@@ -74,13 +89,39 @@
     </item>
     <item>
      <widget class="QLabel" name="label_3">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Продолжительность (мин):</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="duration"/>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_7">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>Рейтинг:</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QComboBox" name="rating"/>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_4">
       <property name="text">
        <string/>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_4">
+     <widget class="QLabel" name="label_9">
       <property name="text">
        <string/>
       </property>
