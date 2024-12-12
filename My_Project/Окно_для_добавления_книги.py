@@ -3,7 +3,7 @@ import sqlite3
 import sys
 
 from PyQt6 import uic
-from PyQt6.QtWidgets import QApplication, QMainWindow
+from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox
 import subprocess
 import Базовая_визуализация
 
@@ -57,6 +57,8 @@ class MyWidget(QMainWindow):
 
         self.connection.cursor().execute(query)
         self.connection.commit()
+        QMessageBox.question(
+            self, '', '\n'.join(["Книга с параметрами: ", f"название: {title}", f"автор: {author}", f"год: {year}", f"жанр: {genre}", "добавлена в каталог"]))
         self.close()
 
     def add_item(self):

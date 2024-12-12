@@ -2,7 +2,7 @@ import sqlite3
 import sys
 
 from PyQt6 import uic
-from PyQt6.QtWidgets import QApplication, QMainWindow
+from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox
 import Базовая_визуализация
 
 
@@ -69,6 +69,9 @@ class MyWidget(QMainWindow):
 
         self.connection.cursor().execute(query)
         self.connection.commit()
+        QMessageBox.question(
+            self, '', '\n'.join(
+                ["Фильм с параметрами: ", f"название: {title}", f"режиссёр: {director}", f"год: {year}", f"жанр: {genre}", f"продолжительность: {duration}", f"рейтинг: {rating}", "добавлен в каталог"]))
         self.close()
 
     def add_item(self):
