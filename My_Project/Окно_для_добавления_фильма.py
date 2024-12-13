@@ -12,7 +12,8 @@ class MyWidget(QMainWindow):
         uic.loadUi('add_film.ui', self)
         self.connection = sqlite3.connect("My_films.sqlite")
 
-        self.genre.addItems([''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()])
+        self.genre.addItems(
+            [''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()])
         self.rating.addItems(['', '1', '2', '3', '4', '5'])
 
         self.other.clicked.connect(self.add_item)
@@ -34,44 +35,47 @@ class MyWidget(QMainWindow):
         if director:
             try:
                 result = int(
-                    self.connection.cursor().execute("select id from directors where name = ?", (director, )).fetchall()[0][0])
+                    self.connection.cursor().execute("select id from directors where name = ?", (director,)).fetchall()[
+                        0][0])
             except Exception:
                 self.connection.cursor().execute(f"INSERT INTO directors(name) VALUES('{director}')")
                 self.connection.commit()
                 result = int(
-                    self.connection.cursor().execute(f"select id from directors where name = ?", (director, )).fetchall()[0][0])
+                    self.connection.cursor().execute(f"select id from directors where name = ?",
+                                                     (director,)).fetchall()[0][0])
             finally:
                 query += f"{result}, "
         else:
-            query += f"{0}, "
+            query += f"{'NULL'}, "
 
         if year:
             query += f"{int(year)}, "
         else:
-            query += f"{0}, "
+            query += f"{'NULL'}, "
 
         if genre:
             result = int(
-                self.connection.cursor().execute(f"select id from genres where genre = ?", (genre, )).fetchall()[0][0])
+                self.connection.cursor().execute(f"select id from genres where genre = ?", (genre,)).fetchall()[0][0])
             query += f"{result}, "
         else:
-            query += f"{0}, "
+            query += f"{'NULL'}, "
 
         if duration:
             query += f"{int(duration)}, "
         else:
-            query += f"{0}, "
+            query += f"{'NULL'}, "
 
         if rating:
             query += f"{int(rating)})"
         else:
-            query += f"{0})"
+            query += f"{'NULL'})"
 
         self.connection.cursor().execute(query)
         self.connection.commit()
         QMessageBox.question(
             self, '', '\n'.join(
-                ["Фильм с параметрами: ", f"название: {title}", f"режиссёр: {director}", f"год: {year}", f"жанр: {genre}", f"продолжительность: {duration}", f"рейтинг: {rating}", "добавлен в каталог"]))
+                ["Фильм с параметрами: ", f"название: {title}", f"режиссёр: {director}", f"год: {year}",
+                 f"жанр: {genre}", f"продолжительность: {duration}", f"рейтинг: {rating}", "добавлен в каталог"]))
         self.close()
 
     def add_item(self):

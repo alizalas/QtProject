@@ -14,7 +14,9 @@ class MyWidget(QMainWindow):
         uic.loadUi('add_book.ui', self)
         self.connection = sqlite3.connect("My_books.sqlite")
 
-        self.genre.addItems([''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()] + ["Другое..."])
+        self.genre.addItems(
+            [''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()] + [
+                "Другое..."])
         self.other.clicked.connect(self.add_item)
         self.add.clicked.connect(self.add_book)
 
@@ -32,33 +34,37 @@ class MyWidget(QMainWindow):
         if author:
             try:
                 result = int(
-                    self.connection.cursor().execute("select id from authors where name = ?", (author, )).fetchall()[0][0])
+                    self.connection.cursor().execute("select id from authors where name = ?", (author,)).fetchall()[0][
+                        0])
             except Exception:
                 self.connection.cursor().execute(f"INSERT INTO authors(name) VALUES('{author}')")
                 self.connection.commit()
                 result = int(
-                    self.connection.cursor().execute(f"select id from authors where name = ?", (author, )).fetchall()[0][0])
+                    self.connection.cursor().execute(f"select id from authors where name = ?", (author,)).fetchall()[0][
+                        0])
             finally:
                 query += f"{result}, "
         else:
-            query += f"{0}, "
+            query += f"{'NULL'}, "
 
         if year:
             query += f"{int(year)}, "
         else:
-            query += f"{0}, "
+            query += f"{'NULL'}, "
 
         if genre:
             result = int(
-                    self.connection.cursor().execute(f"select id from genres where genre = ?", (genre, )).fetchall()[0][0])
+                self.connection.cursor().execute(f"select id from genres where genre = ?", (genre,)).fetchall()[0][0])
             query += f"{result})"
         else:
-            query += f"{0})"
+            query += f"{'NULL'})"
 
         self.connection.cursor().execute(query)
         self.connection.commit()
         QMessageBox.question(
-            self, '', '\n'.join(["Книга с параметрами: ", f"название: {title}", f"автор: {author}", f"год: {year}", f"жанр: {genre}", "добавлена в каталог"]))
+            self, '', '\n'.join(
+                ["Книга с параметрами: ", f"название: {title}", f"автор: {author}", f"год: {year}", f"жанр: {genre}",
+                 "добавлена в каталог"]))
         self.close()
 
     def add_item(self):

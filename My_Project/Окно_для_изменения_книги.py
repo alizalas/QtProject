@@ -2,7 +2,7 @@ import json
 import sqlite3
 import sys
 from PyQt6 import uic
-from PyQt6.QtWidgets import QApplication, QMainWindow
+from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox
 import Базовая_визуализация
 
 
@@ -29,16 +29,51 @@ class MyWidget(QMainWindow):
         Базовая_визуализация.add_item(self)
 
     def save_result(self):
-        title = self.title.text()
-        author = int(self.connection.cursor().execute("SELECT id FROM authors where name = ?", (self.author.text(), )).fetchall()[0][0])
-        year = int(self.year.text())
-        genre = int(self.connection.cursor().execute("SELECT id FROM genres where genre = ?", (self.genre.currentText(), )).fetchall()[0][0])
+        if self.title.text():
+            title = self.title.text()
+        else:
+            title = 'NULL'
+
+        if self.author.text():
+            try:
+                author = int(
+                    self.connection.cursor().execute("SELECT id FROM authors where name = ?", (self.author.text(),)).fetchall()[
+                        0][0])
+            except Exception:
+                self.connection.cursor().execute(f"INSERT INTO authors(name) VALUES('{self.author.text()}')")
+                self.connection.commit()
+                author = int(
+                    self.connection.cursor().execute("SELECT id FROM authors where name = ?",
+                                                     (self.author.text(),)).fetchall()[
+                        0][0])
+        else:
+            author = 'NULL'
+
+        if self.year.text():
+            year = int(self.year.text())
+        else:
+            year = 'NULL'
+
+        if self.genre.currentText():
+            genre = int(self.connection.cursor().execute("SELECT id FROM genres where genre = ?",
+                                                     (self.genre.currentText(),)).fetchall()[0][0])
+        else:
+            genre = 'NULL'
 
         query = f"""UPDATE books SET
         title = '{title}', author = {author}, year = {year}, genre = {genre} WHERE id = ?"""
         print(query)
-        self.connection.cursor().execute(query, (int(self.change[0]), ))
+        self.connection.cursor().execute(query, (int(self.change[0]),))
         self.connection.commit()
+
+        with open("Константы.json", 'r') as file:
+            data = json.load(file)["change"]
+
+        QMessageBox.question(
+            self, '', '<p>'.join(
+                ["<b>Книга с параметрами: </b>", f"название: {data[1]}", f"автор: {data[2]}", f"год: {data[3]}", f"жанр: {data[4]}",
+                 "успешно заменена на книгу с параметрами:"]) + '\n' + '<br>'.join(
+                [f"название: {title}", f"автор: {author}", f"год: {year}", f"жанр: {genre}"]))
         self.close()
 
 

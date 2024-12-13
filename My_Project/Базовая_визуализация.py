@@ -61,7 +61,7 @@ def realisation(self, res, headers, col_num):
 
             for j, elem in enumerate(row):
                 self.tableWidget.setItem(
-                    i, j, QTableWidgetItem(str(elem)))
+                    i, j, QTableWidgetItem(str(elem) if elem else ''))
 
         self.tableWidget.resizeColumnsToContents()
     else:
@@ -71,18 +71,33 @@ def edit_row(self, num, col_num):
     print(f"Редактирование в строке {num}")
     row_values = [self.tableWidget.item(num, col).text() for col in range(col_num)]
     modify_variable_in_file({"change": row_values})
-    subprocess.run([sys.executable, 'Окно_для_изменения_книги.py'])
+    if len(row_values) == 7:
+        subprocess.run([sys.executable, 'Окно_для_изменения_фильма.py'])
+    else:
+        subprocess.run([sys.executable, 'Окно_для_изменения_книги.py'])
 
 def delete_row(self, num, col_num):
-    print(f"Удаление фильма в строке {num}")
+    print(f"Удаление в строке {num}")
     row_values = [self.tableWidget.item(num, col).text() for col in range(col_num)]
-    valid = QMessageBox.question(
-        self, '', "Действительно удалить элемент с такими параметрами: " + ", ".join(row_values),
-        buttons=QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
-    if valid == QMessageBox.StandardButton.Yes:
-        self.tableWidget.removeRow(num)
-        self.connection.cursor().execute("DELETE FROM films WHERE id = ?", (row_values[0], ))
-        self.connection.commit()
+    if len(row_values) == 7:
+        valid = QMessageBox.question(
+            self, '', "Действительно удалить фильм с параметрами: " + '\n'.join(
+                [f"название: {row_values[1]}", f"режиссёр: {row_values[2]}", f"год: {row_values[3]}",
+                 f"жанр: {row_values[4]}", f"продолжительность: {row_values[5]}", f"рейтинг: {row_values[6]}?"]),
+            buttons=QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        if valid == QMessageBox.StandardButton.Yes:
+            self.tableWidget.removeRow(num)
+            self.connection.cursor().execute("DELETE FROM films WHERE id = ?", (row_values[0], ))
+            self.connection.commit()
+    else:
+        valid = QMessageBox.question(
+            self, '', "Действительно удалить книгу с параметрами:" + '\n'.join(
+                [f"название: {row_values[1]}", f"автор: {row_values[2]}", f"год: {row_values[3]}", f"жанр: {row_values[4]}?"]),
+            buttons=QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        if valid == QMessageBox.StandardButton.Yes:
+            self.tableWidget.removeRow(num)
+            self.connection.cursor().execute("DELETE FROM books WHERE id = ?", (row_values[0],))
+            self.connection.commit()
 
 def modify_variable_in_file(new_value):
     # Чтение JSON-файла

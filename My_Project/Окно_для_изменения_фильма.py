@@ -2,7 +2,7 @@ import json
 import sqlite3
 import sys
 from PyQt6 import uic
-from PyQt6.QtWidgets import QApplication, QMainWindow
+from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox
 import Базовая_визуализация
 
 
@@ -34,21 +34,55 @@ class MyWidget(QMainWindow):
         Базовая_визуализация.add_item(self)
 
     def save_result(self):
-        title = self.title.text()
-        director = int(self.connection.cursor().execute("SELECT id FROM authors where name = ?", (self.director.text(), )).fetchall()[0][0])
-        year = int(self.year.text())
-        genre = int(self.connection.cursor().execute("SELECT id FROM genres where genre = ?", (self.genre.currentText(), )).fetchall()[0][0])
-        duration = int(self.duration.text())
-        rating = int(self.rating.currentText())
+        if self.title.text():
+            title = self.title.text()
+        else:
+            title = 'NULL'
 
-        spisok1 = [title, director, year, genre, duration, rating]
-        spisok2 = ['title', 'director', 'year', 'genre', 'duration', 'rating']
+        if self.director.text():
+            try:
+                director = int(self.connection.cursor().execute("SELECT id FROM authors where name = ?", (self.director.text(), )).fetchall()[0][0])
+            except Exception:
+                self.connection.cursor().execute(f"INSERT INTO directors(name) VALUES('{self.director.text()}')")
+                self.connection.commit()
+                director = int(self.connection.cursor().execute("SELECT id FROM authors where name = ?", (self.director.text(), )).fetchall()[0][0])
+        else:
+            director = 'NULL'
+
+        if self.year.text():
+            year = int(self.year.text())
+        else:
+            year = 'NULL'
+
+        if self.genre.currentText():
+            genre = int(self.connection.cursor().execute("SELECT id FROM genres where genre = ?", (self.genre.currentText(), )).fetchall()[0][0])
+        else:
+            genre = 'NULL'
+
+        if self.duration.text():
+            duration = int(self.duration.text())
+        else:
+            duration = 'NULL'
+
+        if self.rating.currentText():
+            rating = int(self.rating.currentText())
+        else:
+            rating = 'NULL'
+
         query = f"""UPDATE films SET
-        title = '{title}', author = {author}, year = {year}, genre = {genre} WHERE id = ?"""
-        query += "WHERE id = ?"
+        title = '{title}', director = {director}, year = {year}, genre = {genre}, duration = {duration}, rating = {rating} WHERE id = ?"""
         print(query)
         self.connection.cursor().execute(query, (int(self.change[0]), ))
         self.connection.commit()
+
+        with open("Константы.json", 'r') as file:
+            data = json.load(file)
+
+        QMessageBox.question(self, '', '\n'.join(["<b>Фильм с параметрами</b>:", f"название: {data[1]}", f"режиссёр: {data[2]}", f"год: {data[3]}",
+                 f"жанр: {data[4]}", f"продолжительность: {data[5]}", f"рейтинг: {data[6]}", "<b>успешно заменён на фильм с параметрами:</b>"]) + '\n' + '\n'.join(
+                [f"название: {title}", f"режиссёр: {director}", f"год: {year}",
+                 f"жанр: {genre}", f"продолжительность: {duration}", f"рейтинг: {rating}"]))
+        self.close()
 
 
 def except_hook(cls, exception, traceback):
