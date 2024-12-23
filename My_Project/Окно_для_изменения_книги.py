@@ -10,13 +10,18 @@ class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('change_book.ui', self)
+        Базовая_визуализация.set_background_image(self)
+        Базовая_визуализация.set_font_size(self)
+
         self.connection = sqlite3.connect("My_books.sqlite")
 
         with open("Константы.json", 'r') as file:
             data = json.load(file)
         self.change = data["change"]
+
         self.title.setText(self.change[1])
         self.author.setText(self.change[2])
+        self.author.setCompleter(Базовая_визуализация.set_compliter(self, "authors"))
         self.year.setText(self.change[3])
         spisok = [''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()]
         self.genre.addItems(spisok)
@@ -66,14 +71,11 @@ class MyWidget(QMainWindow):
         self.connection.cursor().execute(query, (int(self.change[0]),))
         self.connection.commit()
 
-        with open("Константы.json", 'r') as file:
-            data = json.load(file)["change"]
-
         QMessageBox.question(
-            self, '', '<p>'.join(
-                ["<b>Книга с параметрами: </b>", f"название: {data[1]}", f"автор: {data[2]}", f"год: {data[3]}", f"жанр: {data[4]}",
-                 "успешно заменена на книгу с параметрами:"]) + '\n' + '<br>'.join(
-                [f"название: {title}", f"автор: {author}", f"год: {year}", f"жанр: {genre}"]))
+            self, '', "<i>Книга с параметрами:</i>" + '<p>' + '<br>'.join(
+                [f"<b>название:</b> {self.change[1]}", f"<b>автор:</b> {self.change[2]}", f"<b>год:</b> {self.change[3]}", f"<b>жанр:</b> {self.change[4]}"]) + '<p>' +
+                 "успешно заменена на <i>книгу с параметрами:</i>" + '<p>' + '<br>'.join(
+                [f"<b>название:</b> {self.title.text()}", f"<b>автор:</b> {self.author.text()}", f"<b>год:</b> {self.year.text()}", f"<b>жанр:</b> {self.genre.currentText()}"]))
         self.close()
 
 

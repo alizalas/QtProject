@@ -18,13 +18,15 @@ class MyWidget(QMainWindow):
         self.exit.setToolTip("Выйти из приложения")
 
         Базовая_визуализация.set_background_image(self)
-        Базовая_визуализация.set_font(self)
+        Базовая_визуализация.set_font_size(self)
+
         self.books.clicked.connect(self.open_next_window)
         self.films.clicked.connect(self.open_next_window)
         self.reference.clicked.connect(self.open_next_window)
         self.settings.clicked.connect(self.open_next_window)
-        self.exit.clicked.connect(self.open_next_window)
-
+        self.exit.clicked.connect(self.close)
+        self.books_scv.clicked.connect(self.open_next_window)
+        self.films_scv.clicked.connect(self.open_next_window)
 
     def open_next_window(self):
         button_name = self.sender().objectName()
@@ -36,8 +38,10 @@ class MyWidget(QMainWindow):
             subprocess.run([sys.executable, 'Окно_справки.py'])
         elif button_name == "settings":
             subprocess.run([sys.executable, 'Окно_настроек.py'])
+        elif button_name == "books_scv":
+            subprocess.run([sys.executable, 'Окно_книги-scv.py'])
         else:
-            self.close()
+            subprocess.run([sys.executable, 'Окно_фильмы-scv.py'])
 
 def except_hook(cls, exception, traceback):
     sys.__excepthook__(cls, exception, traceback)

@@ -2,11 +2,12 @@ import json
 import subprocess
 import sys
 
+from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFont
-from PyQt6.QtWidgets import QWidget, QMessageBox, QTableWidgetItem, QPushButton
+from PyQt6.QtWidgets import QWidget, QMessageBox, QTableWidgetItem, QPushButton, QLineEdit, QCompleter
 
 
-def set_font(self):
+def set_font_size(self):
     with open("Константы.json", 'r') as file:
         data = json.load(file)
     new_font = QFont(self.font())
@@ -15,18 +16,44 @@ def set_font(self):
     for widget in self.findChildren(QWidget):
         widget.setFont(new_font)
 
+def set_font_color(self):
+    with open("Константы.json", 'r') as file:
+        data = json.load(file)["color"]
+
+    style_sheet = f"""
+        QMainWindow 
+        * {{
+            color: {data};
+        }}
+        """
+    self.setStyleSheet(style_sheet)
+    self.changeColor.setStyleSheet(f"QPushButton {{ color: rgb(255, 255, 255); background-color: {data}; }}")
+
 def set_background_image(self):
     with open("Константы.json", 'r') as file:
         data = json.load(file)
+    # style_sheet = f"""
+    #         QMainWindow {{
+    #             background-image: url({data["background_picture"]});
+    #             background-repeat: no-repeat;
+    #             background-position: center;
+    #             background-attachment: fixed;
+    #             background-size: contain;
+    #             color: red;
+    #         }}
+    #         """
     style_sheet = f"""
-            QMainWindow {{
-                background-image: url({data["background_picture"]});
-                background-repeat: no-repeat;
-                background-position: center;
-                background-attachment: fixed;
-                background-size: contain;
-            }}
-            """
+        QMainWindow {{
+            background-image: url({data["background_picture"]});
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment: fixed;
+            background-size: contain;
+        }}
+        * {{
+            color: {data["color"]};
+        }}
+        """
     self.setStyleSheet(style_sheet)
 
 def add_item(self):
@@ -81,9 +108,9 @@ def delete_row(self, num, col_num):
     row_values = [self.tableWidget.item(num, col).text() for col in range(col_num)]
     if len(row_values) == 7:
         valid = QMessageBox.question(
-            self, '', "Действительно удалить фильм с параметрами: " + '\n'.join(
-                [f"название: {row_values[1]}", f"режиссёр: {row_values[2]}", f"год: {row_values[3]}",
-                 f"жанр: {row_values[4]}", f"продолжительность: {row_values[5]}", f"рейтинг: {row_values[6]}?"]),
+            self, '', "Действительно удалить <i>фильм с параметрами:</i>" + '<p>' + '<br>'.join(
+                [f"<b>название:</b> {row_values[1]}", f"<b>режиссёр:</b> {row_values[2]}", f"<b>год:</b> {row_values[3]}",
+                 f"<b>жанр:</b> {row_values[4]}", f"<b>продолжительность:</b> {row_values[5]}", f"<b>рейтинг:</b> {row_values[6]}?"]),
             buttons=QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
         if valid == QMessageBox.StandardButton.Yes:
             self.tableWidget.removeRow(num)
@@ -91,8 +118,8 @@ def delete_row(self, num, col_num):
             self.connection.commit()
     else:
         valid = QMessageBox.question(
-            self, '', "Действительно удалить книгу с параметрами:" + '\n'.join(
-                [f"название: {row_values[1]}", f"автор: {row_values[2]}", f"год: {row_values[3]}", f"жанр: {row_values[4]}?"]),
+            self, '', "Действительно удалить <i>книгу с параметрами:</i>" + '<p>' + '<br>'.join(
+                [f"<b>название:</b> {row_values[1]}", f"<b>автор:</b> {row_values[2]}", f"<b>год:</b> {row_values[3]}", f"<b>жанр:</b> {row_values[4]}?"]),
             buttons=QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
         if valid == QMessageBox.StandardButton.Yes:
             self.tableWidget.removeRow(num)
@@ -108,3 +135,11 @@ def modify_variable_in_file(new_value):
 
     with open("Константы.json", 'w') as file:
         json.dump(data, file, indent=4)
+
+
+def set_compliter(self, table):
+    completer = QCompleter([el[0] for el in self.connection.cursor().execute(f"SELECT name FROM {table}").fetchall()],
+                           self)
+    completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
+    completer.setFilterMode(Qt.MatchFlag.MatchContains)
+    return completer

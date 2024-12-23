@@ -1,10 +1,8 @@
-import json
 import sqlite3
 import sys
-
 from PyQt6 import uic
-from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox
-import subprocess
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox, QLineEdit, QCompleter
 import Базовая_визуализация
 
 
@@ -12,11 +10,16 @@ class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('add_book.ui', self)
+        Базовая_визуализация.set_background_image(self)
+        Базовая_визуализация.set_font_size(self)
+
         self.connection = sqlite3.connect("My_books.sqlite")
 
+        self.author.setCompleter(Базовая_визуализация.set_compliter(self, "authors"))
         self.genre.addItems(
             [''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()] + [
                 "Другое..."])
+
         self.other.clicked.connect(self.add_item)
         self.add.clicked.connect(self.add_book)
 
@@ -62,9 +65,8 @@ class MyWidget(QMainWindow):
         self.connection.cursor().execute(query)
         self.connection.commit()
         QMessageBox.question(
-            self, '', '\n'.join(
-                ["Книга с параметрами: ", f"название: {title}", f"автор: {author}", f"год: {year}", f"жанр: {genre}",
-                 "добавлена в каталог"]))
+            self, '', "<i>Книга с параметрами:</i>" + '<p>' + '<br>'.join(
+                [f"<b>название:</b> {title}", f"<b>автор:</b> {author}", f"<b>год:</b> {year}", f"<b>жанр:</b> {genre}"]) + '<p>' + "добавлена в каталог")
         self.close()
 
     def add_item(self):

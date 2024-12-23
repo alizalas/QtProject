@@ -10,8 +10,13 @@ class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('select_films.ui', self)
+
+        Базовая_визуализация.set_background_image(self)
+        Базовая_визуализация.set_font_size(self)
+
         self.connection = sqlite3.connect("My_films.sqlite")
 
+        self.director.setCompleter(Базовая_визуализация.set_compliter(self, "directors"))
         self.genre.addItems(
             [''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()])
         self.rating.addItems(['', '1', '2', '3', '4', '5'])
@@ -20,7 +25,7 @@ class MyWidget(QMainWindow):
             button = getattr(self, f'pushButton_{i}')
             button.clicked.connect(self.selection_by_letter)
         self.search.clicked.connect(self.selection_by_characteristics)
-
+        self.returne.clicked.connect(self.close)
 
     def selection_by_characteristics(self):
         title = self.title.text()

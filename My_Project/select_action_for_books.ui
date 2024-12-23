@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>250</width>
-    <height>201</height>
+    <width>219</width>
+    <height>254</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,6 +42,27 @@
       </property>
      </widget>
     </item>
+    <item>
+     <widget class="QPushButton" name="listAuthors">
+      <property name="text">
+       <string>Посмотреть список авторов</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="listGenres">
+      <property name="text">
+       <string>Посмотреть список жанров</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="returne">
+      <property name="text">
+       <string>Вернуться назад</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -49,7 +70,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>250</width>
+     <width>219</width>
      <height>21</height>
     </rect>
    </property>

@@ -2,15 +2,18 @@ import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow
 
+from My_Project import Базовая_визуализация
+
 
 class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('reference.ui', self)
-        self.returne.clicked.connect(self.go_back)
 
-    def go_back(self):
-        self.close()
+        Базовая_визуализация.set_background_image(self)
+        Базовая_визуализация.set_font_size(self)
+
+        self.returne.clicked.connect(self.close)
 
 
 def except_hook(cls, exception, traceback):

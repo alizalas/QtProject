@@ -9,10 +9,14 @@ class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('add_item.ui', self)
+
+        Базовая_визуализация.set_background_image(self)
+        Базовая_визуализация.set_font_size(self)
+
         self.set.clicked.connect(self.set_item)
 
     def set_item(self):
-        Базовая_визуализация.modify_variable_in_file("Константы.json", {"signalText": self.lineEdit.text()})
+        Базовая_визуализация.modify_variable_in_file({"signalText": self.lineEdit.text()})
         self.close()
 
 

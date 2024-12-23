@@ -10,15 +10,22 @@ class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('select_books.ui', self)
+
+        Базовая_визуализация.set_background_image(self)
+        Базовая_визуализация.set_font_size(self)
+
         self.connection = sqlite3.connect("My_books.sqlite")
 
+        self.author.setCompleter(Базовая_визуализация.set_compliter(self, "authors"))
         self.genre.addItems(
             [''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()])
 
         for i in range(1, 34):
             button = getattr(self, f'pushButton_{i}')
+            button.adjustSize()
             button.clicked.connect(self.selection_by_letter)
         self.search.clicked.connect(self.selection_by_characteristics)
+        self.returne.clicked.connect(self.close)
 
     def selection_by_characteristics(self):
         title = self.title.text()

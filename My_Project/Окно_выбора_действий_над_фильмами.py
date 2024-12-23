@@ -4,11 +4,17 @@ from PyQt6.QtWidgets import QApplication, QMainWindow
 
 import subprocess
 
+from My_Project import Базовая_визуализация
+
 
 class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('select_action_for_films.ui', self)
+
+        Базовая_визуализация.set_background_image(self)
+        Базовая_визуализация.set_font_size(self)
+
         self.search.clicked.connect(self.click_handling)
         self.add.clicked.connect(self.click_handling)
 

@@ -1,8 +1,10 @@
+import json
 import subprocess
 import sys
 from PyQt6 import uic
 from PyQt6.QtGui import QPixmap, QPainter
-from PyQt6.QtWidgets import QApplication, QMainWindow, QGraphicsScene, QGraphicsPixmapItem, QGraphicsView
+from PyQt6.QtWidgets import QApplication, QMainWindow, QGraphicsScene, QGraphicsPixmapItem, QGraphicsView, QColorDialog, \
+    QMessageBox
 import Базовая_визуализация
 
 
@@ -10,8 +12,29 @@ class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('settings.ui', self)
-        self.save_changes.clicked.connect(self.save_results)
-        self.changeLanguage.addItems(["Русский", "English"])
+
+        with open("Константы.json", 'r') as file:
+            data = json.load(file)
+        self.changeFont.setValue(data["font"])
+        self.color = data["color"]
+
+        print(data["background_picture"])
+        if data["background_picture"] == "image_1.png":
+            self.radioButton_1.setChecked(True)
+        elif data["background_picture"] == "image_2.png":
+            self.radioButton_2.setChecked(True)
+        elif data["background_picture"] == "image_3.png":
+            self.radioButton_3.setChecked(True)
+        elif data["background_picture"] == "image_4.png":
+            self.radioButton_4.setChecked(True)
+        elif data["background_picture"] == "image_5.png":
+            self.radioButton_5.setChecked(True)
+        elif data["background_picture"] == "image_6.png":
+            self.radioButton_6.setChecked(True)
+
+        self.changeColor.clicked.connect(self.change_color)
+        self.save.clicked.connect(self.save_results)
+        self.returne.clicked.connect(self.close)
 
         # Создаём QGraphicsScene
         self.scene_1 = QGraphicsScene()
@@ -38,7 +61,8 @@ class MyWidget(QMainWindow):
         self.image_6.setScene(self.scene_6)
         self.load_image("image_6.png", 6)
 
-        Базовая_визуализация.set_font(self)
+        Базовая_визуализация.set_font_size(self)
+        Базовая_визуализация.set_font_color(self)
 
     def load_image(self, image_path, n):
         # Настройка масштабирования (по желанию)
@@ -54,22 +78,36 @@ class MyWidget(QMainWindow):
         scene = getattr(self, f'scene_{n}')
         scene.addItem(pixmap_item)
 
+    def change_color(self):
+        color = QColorDialog.getColor()
+        if color.isValid():  # Проверяем, был ли выбран цвет
+            self.color = color.name()
+            self.changeColor.setStyleSheet(f"QPushButton {{ color: rgb(255, 255, 255); background-color: {color.name()}; }}")
+
+
     def save_results(self):
         if self.radioButton_1.isChecked():
-            Базовая_визуализация.modify_variable_in_file({"background_picture": '"image_1.png"'})
+            Базовая_визуализация.modify_variable_in_file({"background_picture": "image_1.png"})
         elif self.radioButton_2.isChecked():
-            Базовая_визуализация.modify_variable_in_file({"background_picture": '"image_2.png"'})
+            Базовая_визуализация.modify_variable_in_file({"background_picture": "image_2.png"})
         elif self.radioButton_3.isChecked():
-            Базовая_визуализация.modify_variable_in_file({"background_picture": '"image_3.png"'})
+            Базовая_визуализация.modify_variable_in_file({"background_picture": "image_3.png"})
         elif self.radioButton_4.isChecked():
-            Базовая_визуализация.modify_variable_in_file({"background_picture": '"image_4.png"'})
+            Базовая_визуализация.modify_variable_in_file({"background_picture": "image_4.png"})
         elif self.radioButton_5.isChecked():
-            Базовая_визуализация.modify_variable_in_file({"background_picture": '"image_5.png"'})
+            Базовая_визуализация.modify_variable_in_file({"background_picture": "image_5.png"})
         elif self.radioButton_6.isChecked():
-            Базовая_визуализация.modify_variable_in_file({"background_picture": '"image_6.png"'})
+            Базовая_визуализация.modify_variable_in_file({"background_picture": "image_6.png"})
 
         Базовая_визуализация.modify_variable_in_file({"font": self.changeFont.value()})
-        Базовая_визуализация.set_font(self)
+        Базовая_визуализация.modify_variable_in_file({"color": self.color})
+
+        Базовая_визуализация.set_font_size(self)
+        Базовая_визуализация.set_font_color(self)
+
+        QMessageBox.question(
+            self, '', "Перезапустите приложение, чтобы все изменения <b>отобразились корректно</b>")
+
         self.close()
 
 def except_hook(cls, exception, traceback):

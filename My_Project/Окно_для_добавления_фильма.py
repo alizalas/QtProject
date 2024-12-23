@@ -10,8 +10,13 @@ class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('add_film.ui', self)
+
+        Базовая_визуализация.set_background_image(self)
+        Базовая_визуализация.set_font_size(self)
+
         self.connection = sqlite3.connect("My_films.sqlite")
 
+        self.director.setCompleter(Базовая_визуализация.set_compliter(self, "directors"))
         self.genre.addItems(
             [''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()])
         self.rating.addItems(['', '1', '2', '3', '4', '5'])
@@ -73,9 +78,9 @@ class MyWidget(QMainWindow):
         self.connection.cursor().execute(query)
         self.connection.commit()
         QMessageBox.question(
-            self, '', '\n'.join(
-                ["Фильм с параметрами: ", f"название: {title}", f"режиссёр: {director}", f"год: {year}",
-                 f"жанр: {genre}", f"продолжительность: {duration}", f"рейтинг: {rating}", "добавлен в каталог"]))
+            self, '', "<i>Фильм с параметрами:</i>" + '<p>' + '<br>'.join(
+                [f"<b>название:</b> {title}", f"<b>режиссёр:</b> {director}", f"<b>год:</b> {year}",
+                 f"<b>жанр:</b> {genre}", f"<b>продолжительность:</b> {duration}", f"<b>рейтинг:</b> {rating}"]) + '<p>' + "добавлен в каталог")
         self.close()
 
     def add_item(self):

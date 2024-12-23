@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>240</width>
-    <height>254</height>
+    <width>194</width>
+    <height>214</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -21,38 +21,30 @@
        <string notr="true">background-color: rgb(255, 255, 255);</string>
       </property>
       <property name="text">
-       <string>Вы хотите работать с  каталогом фильмов.
-Выберите желаемое действие:</string>
+       <string>Вы хотите импортировать данные
+из каталога книг.
+Выберите нужную таблицу:</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="search">
+     <widget class="QPushButton" name="books">
       <property name="text">
-       <string>Найти фильм
-Изменить информацию о фильме
-Удалить фильм</string>
+       <string>Книги</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="add">
+     <widget class="QPushButton" name="authors">
       <property name="text">
-       <string>Добавить фильм</string>
+       <string>Авторы</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="listDirectors">
+     <widget class="QPushButton" name="genres">
       <property name="text">
-       <string>Посмотреть список режиссёров</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="listGenres">
-      <property name="text">
-       <string>Посмотреть список жанров</string>
+       <string>Жанры</string>
       </property>
      </widget>
     </item>
@@ -70,7 +62,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>240</width>
+     <width>194</width>
      <height>21</height>
     </rect>
    </property>

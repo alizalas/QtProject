@@ -10,6 +10,10 @@ class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('change_film.ui', self)
+
+        Базовая_визуализация.set_background_image(self)
+        Базовая_визуализация.set_font_size(self)
+
         self.connection = sqlite3.connect("My_films.sqlite")
 
         with open("Константы.json", 'r') as file:
@@ -18,6 +22,7 @@ class MyWidget(QMainWindow):
 
         self.title.setText(self.change[1])
         self.director.setText(self.change[2])
+        self.director.setCompleter(Базовая_визуализация.set_compliter(self, "directors"))
         self.year.setText(self.change[3])
         spisok1 = [''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()]
         self.genre.addItems(spisok1)
@@ -41,11 +46,11 @@ class MyWidget(QMainWindow):
 
         if self.director.text():
             try:
-                director = int(self.connection.cursor().execute("SELECT id FROM authors where name = ?", (self.director.text(), )).fetchall()[0][0])
+                director = int(self.connection.cursor().execute("SELECT id FROM directors where name = ?", (self.director.text(), )).fetchall()[0][0])
             except Exception:
                 self.connection.cursor().execute(f"INSERT INTO directors(name) VALUES('{self.director.text()}')")
                 self.connection.commit()
-                director = int(self.connection.cursor().execute("SELECT id FROM authors where name = ?", (self.director.text(), )).fetchall()[0][0])
+                director = int(self.connection.cursor().execute("SELECT id FROM directors where name = ?", (self.director.text(), )).fetchall()[0][0])
         else:
             director = 'NULL'
 
@@ -75,13 +80,10 @@ class MyWidget(QMainWindow):
         self.connection.cursor().execute(query, (int(self.change[0]), ))
         self.connection.commit()
 
-        with open("Константы.json", 'r') as file:
-            data = json.load(file)
-
-        QMessageBox.question(self, '', '\n'.join(["<b>Фильм с параметрами</b>:", f"название: {data[1]}", f"режиссёр: {data[2]}", f"год: {data[3]}",
-                 f"жанр: {data[4]}", f"продолжительность: {data[5]}", f"рейтинг: {data[6]}", "<b>успешно заменён на фильм с параметрами:</b>"]) + '\n' + '\n'.join(
-                [f"название: {title}", f"режиссёр: {director}", f"год: {year}",
-                 f"жанр: {genre}", f"продолжительность: {duration}", f"рейтинг: {rating}"]))
+        QMessageBox.question(self, '', "<i>Фильм с параметрами:</i>" + '<p>' + '<br>'.join([f"<b>название: {self.change[1]}", f"<b>режиссёр:</b> {self.change[2]}", f"<b>год:</b> {self.change[3]}",
+                 f"<b>жанр:</b> {self.change[4]}", f"<b>продолжительность:</b> {self.change[5]}", f"<b>рейтинг:</b> {self.change[6]}"]) + '<p>' + "успешно заменён на <i>фильм с параметрами:</i>" + '<p>' + '<br>'.join(
+                [f"<b>название:</b> {self.title.text()}", f"<b>режиссёр:</b> {self.director.text()}", f"<b>год:</b> {self.year.text()}",
+                 f"<b>жанр:</b> {self.genre.currentText()}", f"<b>продолжительность:</b> {self.duration.text()}", f"<b>рейтинг:</b> {self.rating.currentText()}"]))
         self.close()
 
 
