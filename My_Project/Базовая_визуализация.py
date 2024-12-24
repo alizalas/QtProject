@@ -4,7 +4,8 @@ import sys
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFont
-from PyQt6.QtWidgets import QWidget, QMessageBox, QTableWidgetItem, QPushButton, QLineEdit, QCompleter
+from PyQt6.QtWidgets import QWidget, QMessageBox, QTableWidgetItem, QPushButton, QCompleter, QFileDialog
+import datetime
 
 
 def set_font_size(self):
@@ -125,6 +126,12 @@ def delete_row(self, num, col_num):
             self.tableWidget.removeRow(num)
             self.connection.cursor().execute("DELETE FROM books WHERE id = ?", (row_values[0],))
             self.connection.commit()
+
+def select_folder(self, file_name):
+    folder_path = QFileDialog.getExistingDirectory(self, 'Выберите папку', options=QFileDialog.Option.ShowDirsOnly)
+    if folder_path:
+        file_path = f"{folder_path}/{file_name}({datetime.datetime.now().strftime('%d.%m.%Y_%H:%M')})"
+        return file_path
 
 def modify_variable_in_file(new_value):
     # Чтение JSON-файла

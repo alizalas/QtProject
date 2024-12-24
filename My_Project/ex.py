@@ -172,19 +172,3 @@ from PyQt6.QtWidgets import QFileDialog
 #     window = MainWindow()
 #     window.show()
 #     sys.exit(app.exec())
-
-
-def select_folder(self):
-    folder_path = QFileDialog.getExistingDirectory(self, 'Выберите папку', options=QFileDialog.Option.ShowDirsOnly)
-    if folder_path:
-        self.label.setText(f'Выбрана папка: {folder_path}')
-        # Здесь можно сохранить путь к папке для дальнейшего использования в программе
-        self.save_file_to_folder(folder_path)
-
-
-def save_file_to_folder(self, folder_path):
-    # Пример сохранения файла в выбранную папку
-    file_path = f"{folder_path}/example.txt"
-    with open(file_path, 'w') as file:
-        file.write('Пример текста, записанного в файл.')
-    print(f'Файл сохранен по пути: {file_path}')
