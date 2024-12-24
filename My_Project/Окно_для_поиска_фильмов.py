@@ -1,3 +1,4 @@
+import json
 import sqlite3
 import sys
 
@@ -21,8 +22,12 @@ class MyWidget(QMainWindow):
             [''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()])
         self.rating.addItems(['', '1', '2', '3', '4', '5'])
 
+        with open("Константы.json", 'r') as file:
+            data = json.load(file)["font"]
+
         for i in range(1, 34):
             button = getattr(self, f'pushButton_{i}')
+            button.setMinimumSize(data * 3, data * 3)
             button.clicked.connect(self.selection_by_letter)
         self.search.clicked.connect(self.selection_by_characteristics)
         self.returne.clicked.connect(self.close)
