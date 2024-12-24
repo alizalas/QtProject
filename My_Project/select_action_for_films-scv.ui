@@ -22,28 +22,28 @@
       </property>
       <property name="text">
        <string>Вы хотите импортировать данные
-из каталога книг.
+из каталога фильмов.
 Выберите нужную таблицу:</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QRadioButton" name="books">
+     <widget class="QRadioButton" name="films">
       <property name="styleSheet">
        <string notr="true">background-color: rgb(255, 255, 255);</string>
       </property>
       <property name="text">
-       <string>Книги</string>
+       <string>Фильмы</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QRadioButton" name="authors">
+     <widget class="QRadioButton" name="directors">
       <property name="styleSheet">
        <string notr="true">background-color: rgb(255, 255, 255);</string>
       </property>
       <property name="text">
-       <string>Авторы</string>
+       <string>Режиссёры</string>
       </property>
      </widget>
     </item>

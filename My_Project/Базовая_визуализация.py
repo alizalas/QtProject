@@ -17,6 +17,7 @@ def set_font_size(self):
     for widget in self.findChildren(QWidget):
         widget.setFont(new_font)
 
+
 def set_font_color(self):
     with open("Константы.json", 'r') as file:
         data = json.load(file)["color"]
@@ -29,6 +30,7 @@ def set_font_color(self):
         """
     self.setStyleSheet(style_sheet)
     self.changeColor.setStyleSheet(f"QPushButton {{ color: rgb(255, 255, 255); background-color: {data}; }}")
+
 
 def set_background_image(self):
     with open("Константы.json", 'r') as file:
@@ -57,6 +59,7 @@ def set_background_image(self):
         """
     self.setStyleSheet(style_sheet)
 
+
 def add_item(self):
     subprocess.run([sys.executable, 'Окно_добавления_значения.py'])
     with open("Константы.json", 'r') as file:
@@ -64,6 +67,7 @@ def add_item(self):
     self.genre.addItems([str(data["signalText"])])
     self.connection.cursor().execute(f"INSERT INTO genres(genre) VALUES('{data['signalText']}')")
     self.connection.commit()
+
 
 def realisation(self, res, headers, col_num):
     if res:
@@ -95,6 +99,7 @@ def realisation(self, res, headers, col_num):
     else:
         self.statusBar().showMessage('Ничего не нашлось')
 
+
 def edit_row(self, num, col_num):
     print(f"Редактирование в строке {num}")
     row_values = [self.tableWidget.item(num, col).text() for col in range(col_num)]
@@ -104,34 +109,40 @@ def edit_row(self, num, col_num):
     else:
         subprocess.run([sys.executable, 'Окно_для_изменения_книги.py'])
 
+
 def delete_row(self, num, col_num):
     print(f"Удаление в строке {num}")
     row_values = [self.tableWidget.item(num, col).text() for col in range(col_num)]
     if len(row_values) == 7:
         valid = QMessageBox.question(
             self, '', "Действительно удалить <i>фильм с параметрами:</i>" + '<p>' + '<br>'.join(
-                [f"<b>название:</b> {row_values[1]}", f"<b>режиссёр:</b> {row_values[2]}", f"<b>год:</b> {row_values[3]}",
-                 f"<b>жанр:</b> {row_values[4]}", f"<b>продолжительность:</b> {row_values[5]}", f"<b>рейтинг:</b> {row_values[6]}?"]),
+                [f"<b>название:</b> {row_values[1]}", f"<b>режиссёр:</b> {row_values[2]}",
+                 f"<b>год:</b> {row_values[3]}",
+                 f"<b>жанр:</b> {row_values[4]}", f"<b>продолжительность:</b> {row_values[5]}",
+                 f"<b>рейтинг:</b> {row_values[6]}?"]),
             buttons=QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
         if valid == QMessageBox.StandardButton.Yes:
             self.tableWidget.removeRow(num)
-            self.connection.cursor().execute("DELETE FROM films WHERE id = ?", (row_values[0], ))
+            self.connection.cursor().execute("DELETE FROM films WHERE id = ?", (row_values[0],))
             self.connection.commit()
     else:
         valid = QMessageBox.question(
             self, '', "Действительно удалить <i>книгу с параметрами:</i>" + '<p>' + '<br>'.join(
-                [f"<b>название:</b> {row_values[1]}", f"<b>автор:</b> {row_values[2]}", f"<b>год:</b> {row_values[3]}", f"<b>жанр:</b> {row_values[4]}?"]),
+                [f"<b>название:</b> {row_values[1]}", f"<b>автор:</b> {row_values[2]}", f"<b>год:</b> {row_values[3]}",
+                 f"<b>жанр:</b> {row_values[4]}?"]),
             buttons=QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
         if valid == QMessageBox.StandardButton.Yes:
             self.tableWidget.removeRow(num)
             self.connection.cursor().execute("DELETE FROM books WHERE id = ?", (row_values[0],))
             self.connection.commit()
 
+
 def select_folder(self, file_name):
     folder_path = QFileDialog.getExistingDirectory(self, 'Выберите папку', options=QFileDialog.Option.ShowDirsOnly)
     if folder_path:
-        file_path = f"{folder_path}/{file_name}({datetime.datetime.now().strftime('%d.%m.%Y_%H:%M')})"
+        file_path = f"{folder_path}/{file_name}({datetime.datetime.now().strftime('%d-%m-%Y_%H-%M')}).csv"
         return file_path
+
 
 def modify_variable_in_file(new_value):
     # Чтение JSON-файла

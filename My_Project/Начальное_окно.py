@@ -39,7 +39,7 @@ class MyWidget(QMainWindow):
         elif button_name == "settings":
             subprocess.run([sys.executable, 'Окно_настроек.py'])
         elif button_name == "books_scv":
-            subprocess.run([sys.executable, 'Окно_выбора_действий_над_книгами-scv.py'])
+            subprocess.run([sys.executable, 'Окно_выбора_действий_над_книгами-csv.py'])
         else:
             subprocess.run([sys.executable, 'Окно_фильмы-scv.py'])
 
