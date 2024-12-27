@@ -134,7 +134,7 @@ background-color: rgb(0, 0, 0);</string>
     <item row="4" column="1">
      <widget class="QPushButton" name="returne">
       <property name="text">
-       <string>Вернуться к начальному окну</string>
+       <string>Вернуться назад</string>
       </property>
      </widget>
     </item>
