@@ -1,7 +1,7 @@
 import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow
-from My_Project import Basic_visualization, Window_manager, Window_for_searching_films, Window_for_adding_a_film, \
+import Basic_visualization, Window_manager, Window_for_searching_films, Window_for_adding_a_film, \
     Window_for_viewing_directors, Window_for_viewing_genres
 
 
@@ -22,14 +22,14 @@ class MyWidget(QMainWindow):
     def click_handling(self):
         button_name = self.sender().objectName()
         if button_name == "search":
-            Window_manager.open_next_window(Окно_для_поиска_фильмов.MyWidget)
+            Window_manager.open_next_window(Window_for_searching_films.MyWidget)
         elif button_name == "add":
-            Window_manager.open_next_window(Окно_для_добавления_фильма.MyWidget)
+            Window_manager.open_next_window(Window_for_adding_a_film.MyWidget)
         elif button_name == "listDirectors":
-            Window_manager.open_next_window(Окно_для_просмотра_режиссёров.MyWidget)
+            Window_manager.open_next_window(Window_for_viewing_directors.MyWidget)
         elif button_name == "listGenres":
             Basic_visualization.modify_variable_in_file({"database": "films"})
-            Window_manager.open_next_window(Окно_для_просмотра_жанров.MyWidget)
+            Window_manager.open_next_window(Window_for_viewing_genres.MyWidget)
         else:
             Window_manager.close_window(MyWidget)
 

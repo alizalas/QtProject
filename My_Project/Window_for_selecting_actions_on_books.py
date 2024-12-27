@@ -1,7 +1,7 @@
 import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow
-from My_Project import Basic_visualization, Window_manager, Window_for_searching_books, Window_for_adding_a_book, \
+import Basic_visualization, Window_manager, Window_for_searching_books, Window_for_adding_a_book, \
     Window_for_viewing_authors, Window_for_viewing_genres
 
 
@@ -22,14 +22,14 @@ class MyWidget(QMainWindow):
     def click_handling(self):
         button_name = self.sender().objectName()
         if button_name == "search":
-            Window_manager.open_next_window(Окно_для_поиска_книг.MyWidget)
+            Window_manager.open_next_window(Window_for_searching_books.MyWidget)
         elif button_name == "add":
-            Window_manager.open_next_window(Окно_для_добавления_книги.MyWidget)
+            Window_manager.open_next_window(Window_for_adding_a_book.MyWidget)
         elif button_name == "listAuthors":
-            Window_manager.open_next_window(Окно_для_просмотра_авторов.MyWidget)
+            Window_manager.open_next_window(Window_for_viewing_authors.MyWidget)
         elif button_name == "listGenres":
             Basic_visualization.modify_variable_in_file({"database": "books"})
-            Window_manager.open_next_window(Окно_для_просмотра_жанров.MyWidget)
+            Window_manager.open_next_window(Window_for_viewing_genres.MyWidget)
         else:
             Window_manager.close_window(MyWidget)
 

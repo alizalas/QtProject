@@ -2,7 +2,7 @@ import sqlite3
 import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox
-from My_Project import Basic_visualization, Window_manager
+import Basic_visualization, Window_manager
 
 
 class MyWidget(QMainWindow):
@@ -19,6 +19,10 @@ class MyWidget(QMainWindow):
         self.genre.addItems(
             [''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()] + [
                 "Другое..."])
+
+        self.setWindowTitle("Добавление книги")
+        self.author.setToolTip("В приложении принят формат для написания русских авторов: Фамилия И.О.<p>для написания ностранных авторов: Фамилия Имя")
+        self.returne.setToolTip("Закрыть окно")
 
         self.other.clicked.connect(self.add_item)
         self.add.clicked.connect(self.add_book)

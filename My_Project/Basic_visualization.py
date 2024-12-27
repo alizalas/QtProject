@@ -5,7 +5,7 @@ from PyQt6.QtGui import QFont, QDesktopServices
 from PyQt6.QtWidgets import QWidget, QMessageBox, QTableWidgetItem, QPushButton, QCompleter, QFileDialog
 import datetime
 
-from My_Project import Window_manager, Window_for_adding_an_item, Window_for_changing_film, Window_for_changing_book
+import Window_manager, Window_for_adding_an_item, Window_for_changing_film, Window_for_changing_book
 
 
 def set_font_size(self):

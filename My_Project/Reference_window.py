@@ -1,7 +1,7 @@
 import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow
-from My_Project import Basic_visualization, Window_manager
+import Basic_visualization, Window_manager
 
 
 class MyWidget(QMainWindow):
@@ -11,6 +11,9 @@ class MyWidget(QMainWindow):
 
         Basic_visualization.set_background_image(self)
         Basic_visualization.set_font_size(self)
+
+        self.setWindowTitle("Окно справки")
+        self.returne.setToolTip("Закрыть окно")
 
         self.returne.clicked.connect(self.go_back)
 

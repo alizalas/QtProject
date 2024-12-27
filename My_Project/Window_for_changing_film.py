@@ -3,7 +3,7 @@ import sqlite3
 import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox
-from My_Project import Basic_visualization, Window_manager
+import Basic_visualization, Window_manager
 
 
 class MyWidget(QMainWindow):
@@ -32,6 +32,11 @@ class MyWidget(QMainWindow):
         self.rating.addItems(spisok2)
         self.rating.setCurrentIndex(spisok2.index(self.data[6]))
         self.link.setText(self.data[7])
+
+        self.setWindowTitle("Редактирование фильма")
+        self.author.setToolTip(
+            "В приложении принят формат для написания русских режиссёров: Фамилия И.О.<p>для написания ностранных режиссёров: Фамилия Имя")
+        self.returne.setToolTip("Закрыть окно")
 
         self.other.clicked.connect(self.add_item)
         self.save.clicked.connect(self.save_result)

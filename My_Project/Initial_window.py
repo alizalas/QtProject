@@ -1,7 +1,7 @@
 import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow
-from My_Project import Basic_visualization, Window_manager, Window_for_selecting_actions_on_books, \
+import Basic_visualization, Window_manager, Window_for_selecting_actions_on_books, \
     Window_for_selecting_actions_on_films, Reference_window, Settings_window, Window_for_selecting_actions_on_books_csv, \
     Window_for_selecting_actions_on_films_csv
 
@@ -38,17 +38,17 @@ class MyWidget(QMainWindow):
     def open_next_window(self):
         button_name = self.sender().objectName()
         if button_name == "books":
-            Window_manager.open_next_window(Окно_выбора_действий_над_книгами.MyWidget)
+            Window_manager.open_next_window(Window_for_selecting_actions_on_books.MyWidget)
         elif button_name == "films":
-            Window_manager.open_next_window(Окно_выбора_действий_над_фильмами.MyWidget)
+            Window_manager.open_next_window(Window_for_selecting_actions_on_films.MyWidget)
         elif button_name == "reference":
-            Window_manager.open_next_window(Окно_справки.MyWidget)
+            Window_manager.open_next_window(Reference_window.MyWidget)
         elif button_name == "settings":
-            Window_manager.open_next_window(Окно_настроек.MyWidget)
+            Window_manager.open_next_window(Settings_window.MyWidget)
         elif button_name == "books_scv":
-            Window_manager.open_next_window(Окно_выбора_действий_над_книгами_csv.MyWidget)
+            Window_manager.open_next_window(Window_for_selecting_actions_on_books_csv.MyWidget)
         else:
-            Window_manager.open_next_window(Окно_выбора_действий_над_фильмами_csv.MyWidget)
+            Window_manager.open_next_window(Window_for_selecting_actions_on_films_csv.MyWidget)
 
     def exit_the_application(self):
         self._allow_close = True

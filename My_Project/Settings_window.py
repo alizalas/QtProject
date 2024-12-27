@@ -4,7 +4,7 @@ from PyQt6 import uic
 from PyQt6.QtGui import QPixmap, QPainter
 from PyQt6.QtWidgets import QApplication, QMainWindow, QGraphicsScene, QGraphicsPixmapItem, QGraphicsView, QColorDialog, \
     QMessageBox
-from My_Project import Basic_visualization, Window_manager
+import Basic_visualization, Window_manager
 
 
 class MyWidget(QMainWindow):
@@ -62,6 +62,17 @@ class MyWidget(QMainWindow):
 
         Basic_visualization.set_font_size(self)
         Basic_visualization.set_font_color(self)
+
+        self.setWindowTitle("Окно настроек")
+        self.changeColor.setToolTip("Выберите цвет текста в приложении")
+        self.changeFont.setToolTip("Выберите размер текста в приложении")
+        self.radioButton_1.setToolTip("Выберите изображение для фона приложения")
+        self.radioButton_2.setToolTip("Выберите изображение для фона приложения")
+        self.radioButton_3.setToolTip("Выберите изображение для фона приложения")
+        self.radioButton_4.setToolTip("Выберите изображение для фона приложения")
+        self.radioButton_5.setToolTip("Выберите изображение для фона приложения")
+        self.radioButton_6.setToolTip("Выберите изображение для фона приложения")
+        self.returne.setToolTip("Закрыть окно")
 
     def load_image(self, image_path, number):
         # Настройка масштабирования (по желанию)
