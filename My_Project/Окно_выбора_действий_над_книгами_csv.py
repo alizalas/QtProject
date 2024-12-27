@@ -1,4 +1,3 @@
-import csv
 import sqlite3
 import sys
 from PyQt6 import uic

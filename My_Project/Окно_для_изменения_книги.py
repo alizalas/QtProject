@@ -3,8 +3,7 @@ import sqlite3
 import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox
-import Базовая_визуализация
-from My_Project import Менеджер_окон
+from My_Project import Базовая_визуализация, Менеджер_окон
 
 
 class MyWidget(QMainWindow):
@@ -43,7 +42,8 @@ class MyWidget(QMainWindow):
         if self.author.text():
             try:
                 author = int(
-                    self.connection.cursor().execute("SELECT id FROM authors where name = ?", (self.author.text(),)).fetchall()[0][0])
+                    self.connection.cursor().execute("SELECT id FROM authors where name = ?",
+                                                     (self.author.text(),)).fetchall()[0][0])
             except Exception:
                 self.connection.cursor().execute(f"INSERT INTO authors(name) VALUES('{self.author.text()}')")
                 self.connection.commit()
@@ -60,7 +60,7 @@ class MyWidget(QMainWindow):
 
         if self.genre.currentText():
             genre = int(self.connection.cursor().execute("SELECT id FROM genres where genre = ?",
-                                                     (self.genre.currentText(),)).fetchall()[0][0])
+                                                         (self.genre.currentText(),)).fetchall()[0][0])
         else:
             genre = 'NULL'
 
@@ -76,9 +76,12 @@ class MyWidget(QMainWindow):
 
         QMessageBox.question(
             self, '', "<i>Книга с параметрами:</i>" + '<p>' + '<br>'.join(
-                [f"<b>название:</b> {self.data[1]}", f"<b>автор:</b> {self.data[2]}", f"<b>год:</b> {self.data[3]}", f"<b>жанр:</b> {self.data[4]}", f"<b>ссылка:</b> {self.data[5]}"]) + '<p>' +
-                 "успешно заменена на <i>книгу с параметрами:</i>" + '<p>' + '<br>'.join(
-                [f"<b>название:</b> {self.title.text()}", f"<b>автор:</b> {self.author.text()}", f"<b>год:</b> {self.year.text()}", f"<b>жанр:</b> {self.genre.currentText()}", f"<b>ссылка:</b> {self.link.text()}"]))
+                [f"<b>название:</b> {self.data[1]}", f"<b>автор:</b> {self.data[2]}", f"<b>год:</b> {self.data[3]}",
+                 f"<b>жанр:</b> {self.data[4]}", f"<b>ссылка:</b> {self.data[5]}"]) + '<p>' +
+                      "успешно заменена на <i>книгу с параметрами:</i>" + '<p>' + '<br>'.join(
+                [f"<b>название:</b> {self.title.text()}", f"<b>автор:</b> {self.author.text()}",
+                 f"<b>год:</b> {self.year.text()}", f"<b>жанр:</b> {self.genre.currentText()}",
+                 f"<b>ссылка:</b> {self.link.text()}"]))
         self.close()
 
     def add_item(self):
@@ -86,6 +89,7 @@ class MyWidget(QMainWindow):
 
     def go_back(self):
         Менеджер_окон.close_window(MyWidget)
+
     def closeEvent(self, event):
         self.connection.close()
 

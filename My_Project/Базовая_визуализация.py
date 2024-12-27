@@ -1,7 +1,5 @@
 import csv
 import json
-#import subprocess
-import sys
 from PyQt6.QtCore import Qt, QUrl
 from PyQt6.QtGui import QFont, QDesktopServices
 from PyQt6.QtWidgets import QWidget, QMessageBox, QTableWidgetItem, QPushButton, QCompleter, QFileDialog
@@ -13,6 +11,7 @@ from My_Project import Менеджер_окон, Окно_добавления_
 def set_font_size(self):
     with open("Константы.json", 'r') as file:
         data = json.load(file)
+
     new_font = QFont(self.font())
     new_font.setPointSize(data["font"])
     self.setFont(new_font)
@@ -37,16 +36,7 @@ def set_font_color(self):
 def set_background_image(self):
     with open("Константы.json", 'r') as file:
         data = json.load(file)
-    # style_sheet = f"""
-    #         QMainWindow {{
-    #             background-image: url({data["background_picture"]});
-    #             background-repeat: no-repeat;
-    #             background-position: center;
-    #             background-attachment: fixed;
-    #             background-size: contain;
-    #             color: red;
-    #         }}
-    #         """
+
     style_sheet = f"""
         QMainWindow {{
             background-image: url({data["background_picture"]});
@@ -64,8 +54,10 @@ def set_background_image(self):
 
 def add_item(self):
     Менеджер_окон.open_next_window(Окно_добавления_значения.MyWidget)
+
     with open("Константы.json", 'r') as file:
         data = json.load(file)["signalText"]
+
     self.genre.addItems([str(data)])
     self.connection.cursor().execute(f"INSERT INTO genres(genre) VALUES('{data}')")
     self.connection.commit()
@@ -98,7 +90,6 @@ def realisation_with_additional_features(self, res, headers, col_num):
                     i, j, QTableWidgetItem(str(elem) if elem and elem != 'NULL' else ''))
 
         self.tableWidget.resizeColumnsToContents()
-
         self.tableWidget.cellClicked.connect(self.open_link)
     else:
         self.statusBar().setStyleSheet("background-color: white; color: red;")
@@ -107,7 +98,6 @@ def realisation_with_additional_features(self, res, headers, col_num):
 
 
 def open_link(self, row, col):
-    print(row, col)
     if col == self.tableWidget.columnCount() - 3:
         item = self.tableWidget.item(row, col)
         if item:
@@ -118,6 +108,7 @@ def open_link(self, row, col):
 def edit_row(self, num, col_num):
     row_values = [self.tableWidget.item(num, col).text() for col in range(col_num)]
     modify_variable_in_file({"change": row_values})
+
     if len(row_values) == 8:
         Менеджер_окон.open_next_window(Окно_для_изменения_фильма.MyWidget)
     else:
@@ -126,6 +117,7 @@ def edit_row(self, num, col_num):
 
 def delete_row(self, num, col_num):
     row_values = [self.tableWidget.item(num, col).text() for col in range(col_num)]
+
     if len(row_values) == 8:
         valid = QMessageBox.question(
             self, '', "Действительно удалить <i>фильм с параметрами:</i>" + '<p>' + '<br>'.join(
@@ -134,6 +126,7 @@ def delete_row(self, num, col_num):
                  f"<b>жанр:</b> {row_values[4]}", f"<b>продолжительность:</b> {row_values[5]}",
                  f"<b>рейтинг:</b> {row_values[6]}", f"<b>ссылка:</b> {row_values[7]}?"]),
             buttons=QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+
         if valid == QMessageBox.StandardButton.Yes:
             self.tableWidget.removeRow(num)
             self.connection.cursor().execute("DELETE FROM films WHERE id = ?", (row_values[0],))
@@ -144,6 +137,7 @@ def delete_row(self, num, col_num):
                 [f"<b>название:</b> {row_values[1]}", f"<b>автор:</b> {row_values[2]}", f"<b>год:</b> {row_values[3]}",
                  f"<b>жанр:</b> {row_values[4]}", f"<b>ссылка:</b> {row_values[5]}?"]),
             buttons=QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+
         if valid == QMessageBox.StandardButton.Yes:
             self.tableWidget.removeRow(num)
             self.connection.cursor().execute("DELETE FROM books WHERE id = ?", (row_values[0],))
@@ -166,10 +160,14 @@ def simple_realisation(self, res, headers, col_num):
 
         self.tableWidget.resizeColumnsToContents()
     else:
-        self.statusBar().showMessage('Ничего не нашлось')
+        self.statusBar().setStyleSheet("background-color: white; color: red;")
+        self.statusBar().showMessage('Ничего не нашлось', 3000)
+        QMessageBox.question(self, '', "Ничего не нашлось")
+
 
 def select_folder(self, file_name):
     folder_path = QFileDialog.getExistingDirectory(self, 'Выберите папку', options=QFileDialog.Option.ShowDirsOnly)
+
     if folder_path:
         file_path = f"{folder_path}/{file_name}({datetime.datetime.now().strftime('%d-%m-%Y_%H-%M')}).csv"
         return file_path
@@ -184,15 +182,14 @@ def make_csv(self, file_path, data, headers):
             for row in data:
                 writer.writerow(list(row))
 
-        QMessageBox.question(self, '', f"Данные из выбранной Вами таблицы <b>успешно сохранены</b> по <i>пути</i>:<p>{file_path}")
-
+        QMessageBox.question(self, '',
+                             f"Данные из выбранной Вами таблицы <b>успешно сохранены</b> по <i>пути</i>:<p>{file_path}")
     else:
         QMessageBox.question(self, '', "В выбранной Вами таблице <b>нет данных</b>")
     self.go_back()
 
 
 def modify_variable_in_file(new_value):
-    # Чтение JSON-файла
     with open("Константы.json", 'r') as file:
         data = json.load(file)
 

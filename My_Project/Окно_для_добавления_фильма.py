@@ -1,10 +1,8 @@
 import sqlite3
 import sys
-
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox
-import Базовая_визуализация
-from My_Project import Менеджер_окон
+from My_Project import Базовая_визуализация, Менеджер_окон
 
 
 class MyWidget(QMainWindow):
@@ -42,13 +40,14 @@ class MyWidget(QMainWindow):
 
         if director:
             try:
-                result = self.connection.cursor().execute("select id from directors where name = ?", (director,)).fetchall()[
+                result = \
+                    self.connection.cursor().execute("select id from directors where name = ?", (director,)).fetchall()[
                         0][0]
             except Exception:
                 self.connection.cursor().execute(f"INSERT INTO directors(name) VALUES('{director}')")
                 self.connection.commit()
                 result = self.connection.cursor().execute(f"select id from directors where name = ?",
-                                                     (director,)).fetchall()[0][0]
+                                                          (director,)).fetchall()[0][0]
             finally:
                 query += f"{int(result)}, "
         else:
@@ -60,7 +59,8 @@ class MyWidget(QMainWindow):
             query += f"{'NULL'}, "
 
         if genre:
-            result = self.connection.cursor().execute(f"select id from genres where genre = ?", (genre,)).fetchall()[0][0]
+            result = self.connection.cursor().execute(f"select id from genres where genre = ?", (genre,)).fetchall()[0][
+                0]
             query += f"{int(result)}, "
         else:
             query += f"{'NULL'}, "
@@ -85,7 +85,8 @@ class MyWidget(QMainWindow):
         QMessageBox.question(
             self, '', "<i>Фильм с параметрами:</i>" + '<p>' + '<br>'.join(
                 [f"<b>название:</b> {title}", f"<b>режиссёр:</b> {director}", f"<b>год:</b> {year}",
-                 f"<b>жанр:</b> {genre}", f"<b>продолжительность:</b> {duration}", f"<b>рейтинг:</b> {rating}", f"<b>ссылка:</b> {link}"]) + '<p>' + "добавлен в каталог")
+                 f"<b>жанр:</b> {genre}", f"<b>продолжительность:</b> {duration}", f"<b>рейтинг:</b> {rating}",
+                 f"<b>ссылка:</b> {link}"]) + '<p>' + "добавлен в каталог")
         self.close()
 
     def add_item(self):

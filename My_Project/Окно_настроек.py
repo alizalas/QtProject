@@ -1,12 +1,10 @@
 import json
-import subprocess
 import sys
 from PyQt6 import uic
 from PyQt6.QtGui import QPixmap, QPainter
 from PyQt6.QtWidgets import QApplication, QMainWindow, QGraphicsScene, QGraphicsPixmapItem, QGraphicsView, QColorDialog, \
     QMessageBox
-import Базовая_визуализация
-from My_Project import Менеджер_окон
+from My_Project import Базовая_визуализация, Менеджер_окон
 
 
 class MyWidget(QMainWindow):
@@ -83,7 +81,8 @@ class MyWidget(QMainWindow):
         color = QColorDialog.getColor()
         if color.isValid():
             self.color = color.name()
-            self.changeColor.setStyleSheet(f"QPushButton {{ color: rgb(255, 255, 255); background-color: {color.name()}; }}")
+            self.changeColor.setStyleSheet(
+                f"QPushButton {{ color: rgb(255, 255, 255); background-color: {color.name()}; }}")
 
     def save_result(self):
         if self.radioButton_1.isChecked():

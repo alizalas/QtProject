@@ -1,11 +1,9 @@
 import json
 import sqlite3
 import sys
-
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow
-import Базовая_визуализация
-from My_Project import Менеджер_окон
+from My_Project import Базовая_визуализация, Менеджер_окон
 
 
 class MyWidget(QMainWindow):

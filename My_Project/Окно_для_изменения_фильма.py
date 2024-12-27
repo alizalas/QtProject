@@ -3,8 +3,7 @@ import sqlite3
 import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox
-import Базовая_визуализация
-from My_Project import Менеджер_окон
+from My_Project import Базовая_визуализация, Менеджер_окон
 
 
 class MyWidget(QMainWindow):
@@ -46,11 +45,13 @@ class MyWidget(QMainWindow):
 
         if self.director.text():
             try:
-                director = int(self.connection.cursor().execute("SELECT id FROM directors where name = ?", (self.director.text(), )).fetchall()[0][0])
+                director = int(self.connection.cursor().execute("SELECT id FROM directors where name = ?",
+                                                                (self.director.text(),)).fetchall()[0][0])
             except Exception:
                 self.connection.cursor().execute(f"INSERT INTO directors(name) VALUES('{self.director.text()}')")
                 self.connection.commit()
-                director = int(self.connection.cursor().execute("SELECT id FROM directors where name = ?", (self.director.text(), )).fetchall()[0][0])
+                director = int(self.connection.cursor().execute("SELECT id FROM directors where name = ?",
+                                                                (self.director.text(),)).fetchall()[0][0])
         else:
             director = 'NULL'
 
@@ -60,7 +61,8 @@ class MyWidget(QMainWindow):
             year = 'NULL'
 
         if self.genre.currentText():
-            genre = int(self.connection.cursor().execute("SELECT id FROM genres where genre = ?", (self.genre.currentText(), )).fetchall()[0][0])
+            genre = int(self.connection.cursor().execute("SELECT id FROM genres where genre = ?",
+                                                         (self.genre.currentText(),)).fetchall()[0][0])
         else:
             genre = 'NULL'
 
@@ -84,10 +86,15 @@ class MyWidget(QMainWindow):
         self.connection.cursor().execute(query, (int(self.data[0]),))
         self.connection.commit()
 
-        QMessageBox.question(self, '', "<i>Фильм с параметрами:</i>" + '<p>' + '<br>'.join([f"<b>название: {self.data[1]}", f"<b>режиссёр:</b> {self.data[2]}", f"<b>год:</b> {self.data[3]}",
-                 f"<b>жанр:</b> {self.data[4]}", f"<b>продолжительность:</b> {self.data[5]}", f"<b>рейтинг:</b> {self.data[6]}", f"<b>ссылка:</b> {self.data[7]}"]) + '<p>' + "успешно заменён на <i>фильм с параметрами:</i>" + '<p>' + '<br>'.join(
-                [f"<b>название:</b> {self.title.text()}", f"<b>режиссёр:</b> {self.director.text()}", f"<b>год:</b> {self.year.text()}",
-                 f"<b>жанр:</b> {self.genre.currentText()}", f"<b>продолжительность:</b> {self.duration.text()}", f"<b>рейтинг:</b> {self.rating.currentText()}", f"<b>ссылка:</b> {self.link.text()}"]))
+        QMessageBox.question(self, '', "<i>Фильм с параметрами:</i>" + '<p>' + '<br>'.join(
+            [f"<b>название: {self.data[1]}", f"<b>режиссёр:</b> {self.data[2]}", f"<b>год:</b> {self.data[3]}",
+             f"<b>жанр:</b> {self.data[4]}", f"<b>продолжительность:</b> {self.data[5]}",
+             f"<b>рейтинг:</b> {self.data[6]}",
+             f"<b>ссылка:</b> {self.data[7]}"]) + '<p>' + "успешно заменён на <i>фильм с параметрами:</i>" + '<p>' + '<br>'.join(
+            [f"<b>название:</b> {self.title.text()}", f"<b>режиссёр:</b> {self.director.text()}",
+             f"<b>год:</b> {self.year.text()}",
+             f"<b>жанр:</b> {self.genre.currentText()}", f"<b>продолжительность:</b> {self.duration.text()}",
+             f"<b>рейтинг:</b> {self.rating.currentText()}", f"<b>ссылка:</b> {self.link.text()}"]))
         self.close()
 
     def add_item(self):

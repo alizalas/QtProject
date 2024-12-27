@@ -1,10 +1,8 @@
 import sqlite3
 import sys
 from PyQt6 import uic
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox, QLineEdit, QCompleter
-import Базовая_визуализация
-from My_Project import Менеджер_окон
+from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox
+from My_Project import Базовая_визуализация, Менеджер_окон
 
 
 class MyWidget(QMainWindow):
@@ -40,11 +38,15 @@ class MyWidget(QMainWindow):
 
         if author:
             try:
-                result = self.connection.cursor().execute("select id from authors where name = ?", (author,)).fetchall()[0][0]
+                result = \
+                    self.connection.cursor().execute("select id from authors where name = ?", (author,)).fetchall()[0][
+                        0]
             except Exception:
                 self.connection.cursor().execute(f"INSERT INTO authors(name) VALUES('{author}')")
                 self.connection.commit()
-                result = self.connection.cursor().execute(f"select id from authors where name = ?", (author,)).fetchall()[0][0]
+                result = \
+                    self.connection.cursor().execute(f"select id from authors where name = ?", (author,)).fetchall()[0][
+                        0]
             finally:
                 query += f"{int(result)}, "
         else:
@@ -56,7 +58,8 @@ class MyWidget(QMainWindow):
             query += f"{'NULL'}, "
 
         if genre:
-            result = self.connection.cursor().execute(f"select id from genres where genre = ?", (genre,)).fetchall()[0][0]
+            result = self.connection.cursor().execute(f"select id from genres where genre = ?", (genre,)).fetchall()[0][
+                0]
             query += f"{int(result)}, "
         else:
             query += f"{'NULL'}, "
@@ -70,7 +73,8 @@ class MyWidget(QMainWindow):
         self.connection.commit()
         QMessageBox.question(
             self, '', "<i>Книга с параметрами:</i>" + '<p>' + '<br>'.join(
-                [f"<b>название:</b> {title}", f"<b>автор:</b> {author}", f"<b>год:</b> {year}", f"<b>жанр:</b> {genre}", f"<b>ссылка:</b> {link}"]) + '<p>' + "добавлена в каталог")
+                [f"<b>название:</b> {title}", f"<b>автор:</b> {author}", f"<b>год:</b> {year}", f"<b>жанр:</b> {genre}",
+                 f"<b>ссылка:</b> {link}"]) + '<p>' + "добавлена в каталог")
         self.close()
 
     def add_item(self):
