@@ -4,7 +4,7 @@ from PyQt6 import uic
 from PyQt6.QtGui import QPixmap, QPainter
 from PyQt6.QtWidgets import QApplication, QMainWindow, QGraphicsScene, QGraphicsPixmapItem, QGraphicsView, QColorDialog, \
     QMessageBox
-from My_Project import Базовая_визуализация, Менеджер_окон
+from My_Project import Basic_visualization, Window_manager
 
 
 class MyWidget(QMainWindow):
@@ -12,7 +12,7 @@ class MyWidget(QMainWindow):
         super().__init__()
         uic.loadUi('settings.ui', self)
 
-        with open("Константы.json", 'r') as file:
+        with open("Constants.json", 'r') as file:
             data = json.load(file)
 
         self.changeFont.setValue(data["font"])

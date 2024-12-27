@@ -1,7 +1,7 @@
 import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow
-from My_Project import Базовая_визуализация, Менеджер_окон
+from My_Project import Basic_visualization, Window_manager
 
 
 class MyWidget(QMainWindow):

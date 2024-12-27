@@ -3,7 +3,7 @@ import sqlite3
 import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow
-from My_Project import Базовая_визуализация, Менеджер_окон
+from My_Project import Basic_visualization, Window_manager
 
 
 class MyWidget(QMainWindow):
@@ -21,7 +21,7 @@ class MyWidget(QMainWindow):
             [''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()])
         self.rating.addItems(['', '1', '2', '3', '4', '5'])
 
-        with open("Константы.json", 'r') as file:
+        with open("Constants.json", 'r') as file:
             data = json.load(file)["font"]
 
         for i in range(1, 34):

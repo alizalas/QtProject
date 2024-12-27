@@ -3,7 +3,7 @@ import sqlite3
 import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox
-from My_Project import Базовая_визуализация, Менеджер_окон
+from My_Project import Basic_visualization, Window_manager
 
 
 class MyWidget(QMainWindow):
@@ -16,7 +16,7 @@ class MyWidget(QMainWindow):
 
         self.connection = sqlite3.connect("My_books.sqlite")
 
-        with open("Константы.json", 'r') as file:
+        with open("Constants.json", 'r') as file:
             data = json.load(file)
         self.data = data["change"]
 

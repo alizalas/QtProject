@@ -1,9 +1,9 @@
 import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow
-from My_Project import Базовая_визуализация, Менеджер_окон, Окно_выбора_действий_над_книгами, \
-    Окно_выбора_действий_над_фильмами, Окно_справки, Окно_настроек, Окно_выбора_действий_над_книгами_csv, \
-    Окно_выбора_действий_над_фильмами_csv
+from My_Project import Basic_visualization, Window_manager, Window_for_selecting_actions_on_books, \
+    Window_for_selecting_actions_on_films, Reference_window, Settings_window, Window_for_selecting_actions_on_books_csv, \
+    Window_for_selecting_actions_on_films_csv
 
 
 class MyWidget(QMainWindow):

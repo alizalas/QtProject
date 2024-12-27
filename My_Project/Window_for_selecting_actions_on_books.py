@@ -1,8 +1,8 @@
 import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow
-from My_Project import Базовая_визуализация, Менеджер_окон, Окно_для_поиска_книг, Окно_для_добавления_книги, \
-    Окно_для_просмотра_авторов, Окно_для_просмотра_жанров
+from My_Project import Basic_visualization, Window_manager, Window_for_searching_books, Window_for_adding_a_book, \
+    Window_for_viewing_authors, Window_for_viewing_genres
 
 
 class MyWidget(QMainWindow):

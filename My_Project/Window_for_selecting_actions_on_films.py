@@ -1,8 +1,8 @@
 import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow
-from My_Project import Базовая_визуализация, Менеджер_окон, Окно_для_поиска_фильмов, Окно_для_добавления_фильма, \
-    Окно_для_просмотра_режиссёров, Окно_для_просмотра_жанров
+from My_Project import Basic_visualization, Window_manager, Window_for_searching_films, Window_for_adding_a_film, \
+    Window_for_viewing_directors, Window_for_viewing_genres
 
 
 class MyWidget(QMainWindow):

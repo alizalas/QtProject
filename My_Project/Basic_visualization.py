@@ -5,11 +5,11 @@ from PyQt6.QtGui import QFont, QDesktopServices
 from PyQt6.QtWidgets import QWidget, QMessageBox, QTableWidgetItem, QPushButton, QCompleter, QFileDialog
 import datetime
 
-from My_Project import Менеджер_окон, Окно_добавления_значения, Окно_для_изменения_фильма, Окно_для_изменения_книги
+from My_Project import Window_manager, Window_for_adding_an_item, Window_for_changing_film, Window_for_changing_book
 
 
 def set_font_size(self):
-    with open("Константы.json", 'r') as file:
+    with open("Constants.json", 'r') as file:
         data = json.load(file)
 
     new_font = QFont(self.font())
@@ -20,7 +20,7 @@ def set_font_size(self):
 
 
 def set_font_color(self):
-    with open("Константы.json", 'r') as file:
+    with open("Constants.json", 'r') as file:
         data = json.load(file)["color"]
 
     style_sheet = f"""
@@ -34,7 +34,7 @@ def set_font_color(self):
 
 
 def set_background_image(self):
-    with open("Константы.json", 'r') as file:
+    with open("Constants.json", 'r') as file:
         data = json.load(file)
 
     style_sheet = f"""
@@ -55,7 +55,7 @@ def set_background_image(self):
 def add_item(self):
     Менеджер_окон.open_next_window(Окно_добавления_значения.MyWidget)
 
-    with open("Константы.json", 'r') as file:
+    with open("Constants.json", 'r') as file:
         data = json.load(file)["signalText"]
 
     self.genre.addItems([str(data)])
@@ -190,12 +190,12 @@ def make_csv(self, file_path, data, headers):
 
 
 def modify_variable_in_file(new_value):
-    with open("Константы.json", 'r') as file:
+    with open("Constants.json", 'r') as file:
         data = json.load(file)
 
     data.update(new_value)
 
-    with open("Константы.json", 'w') as file:
+    with open("Constants.json", 'w') as file:
         json.dump(data, file, indent=4)
 
 
