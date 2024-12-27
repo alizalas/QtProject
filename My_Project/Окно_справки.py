@@ -2,7 +2,7 @@ import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow
 
-from My_Project import Базовая_визуализация
+from My_Project import Базовая_визуализация, Менеджер_окон
 
 
 class MyWidget(QMainWindow):
@@ -13,7 +13,10 @@ class MyWidget(QMainWindow):
         Базовая_визуализация.set_background_image(self)
         Базовая_визуализация.set_font_size(self)
 
-        self.returne.clicked.connect(self.close)
+        self.returne.clicked.connect(self.go_back)
+
+    def go_back(self):
+        Менеджер_окон.close_window(MyWidget)
 
 
 def except_hook(cls, exception, traceback):

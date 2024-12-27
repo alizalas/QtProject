@@ -391,7 +391,7 @@
        <string notr="true">background-color: rgb(255, 255, 255);</string>
       </property>
       <property name="text">
-       <string> Импорт данных в scv-файл 
+       <string> Импорт данных в csv-файл    
  Выберите каталог:</string>
       </property>
      </widget>

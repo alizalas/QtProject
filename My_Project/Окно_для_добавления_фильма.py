@@ -4,6 +4,7 @@ import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox
 import Базовая_визуализация
+from My_Project import Менеджер_окон
 
 
 class MyWidget(QMainWindow):
@@ -23,6 +24,7 @@ class MyWidget(QMainWindow):
 
         self.other.clicked.connect(self.add_item)
         self.add.clicked.connect(self.add_film)
+        self.returne.clicked.connect(self.go_back)
 
     def add_film(self):
         title = self.title.text()
@@ -31,25 +33,24 @@ class MyWidget(QMainWindow):
         genre = self.genre.currentText()
         duration = self.duration.text()
         rating = self.rating.currentText()
+        link = self.link.text()
 
         if title:
-            query = f"INSERT INTO films(title, director, year, genre, duration, rating) VALUES('{title}', "
+            query = f"INSERT INTO films(title, director, year, genre, duration, rating, link) VALUES('{title}', "
         else:
-            query = f"INSERT INTO films(title, director, year, genre, duration, rating) VALUES({''}, "
+            query = f"INSERT INTO films(title, director, year, genre, duration, rating, link) VALUES({'NULL'}, "
 
         if director:
             try:
-                result = int(
-                    self.connection.cursor().execute("select id from directors where name = ?", (director,)).fetchall()[
-                        0][0])
+                result = self.connection.cursor().execute("select id from directors where name = ?", (director,)).fetchall()[
+                        0][0]
             except Exception:
                 self.connection.cursor().execute(f"INSERT INTO directors(name) VALUES('{director}')")
                 self.connection.commit()
-                result = int(
-                    self.connection.cursor().execute(f"select id from directors where name = ?",
-                                                     (director,)).fetchall()[0][0])
+                result = self.connection.cursor().execute(f"select id from directors where name = ?",
+                                                     (director,)).fetchall()[0][0]
             finally:
-                query += f"{result}, "
+                query += f"{int(result)}, "
         else:
             query += f"{'NULL'}, "
 
@@ -59,9 +60,8 @@ class MyWidget(QMainWindow):
             query += f"{'NULL'}, "
 
         if genre:
-            result = int(
-                self.connection.cursor().execute(f"select id from genres where genre = ?", (genre,)).fetchall()[0][0])
-            query += f"{result}, "
+            result = self.connection.cursor().execute(f"select id from genres where genre = ?", (genre,)).fetchall()[0][0]
+            query += f"{int(result)}, "
         else:
             query += f"{'NULL'}, "
 
@@ -71,7 +71,12 @@ class MyWidget(QMainWindow):
             query += f"{'NULL'}, "
 
         if rating:
-            query += f"{int(rating)})"
+            query += f"{int(rating)}, "
+        else:
+            query += f"{'NULL'}, "
+
+        if link:
+            query += f"'{link}')"
         else:
             query += f"{'NULL'})"
 
@@ -80,11 +85,14 @@ class MyWidget(QMainWindow):
         QMessageBox.question(
             self, '', "<i>Фильм с параметрами:</i>" + '<p>' + '<br>'.join(
                 [f"<b>название:</b> {title}", f"<b>режиссёр:</b> {director}", f"<b>год:</b> {year}",
-                 f"<b>жанр:</b> {genre}", f"<b>продолжительность:</b> {duration}", f"<b>рейтинг:</b> {rating}"]) + '<p>' + "добавлен в каталог")
+                 f"<b>жанр:</b> {genre}", f"<b>продолжительность:</b> {duration}", f"<b>рейтинг:</b> {rating}", f"<b>ссылка:</b> {link}"]) + '<p>' + "добавлен в каталог")
         self.close()
 
     def add_item(self):
         Базовая_визуализация.add_item(self)
+
+    def go_back(self):
+        Менеджер_окон.close_window(MyWidget)
 
     def closeEvent(self, event):
         self.connection.close()

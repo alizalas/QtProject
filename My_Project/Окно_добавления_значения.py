@@ -3,6 +3,7 @@ from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow
 
 import Базовая_визуализация
+from My_Project import Менеджер_окон
 
 
 class MyWidget(QMainWindow):
@@ -14,10 +15,14 @@ class MyWidget(QMainWindow):
         Базовая_визуализация.set_font_size(self)
 
         self.set.clicked.connect(self.set_item)
+        self.returne.clicked.connect(self.go_back)
 
     def set_item(self):
         Базовая_визуализация.modify_variable_in_file({"signalText": self.lineEdit.text()})
-        self.close()
+        self.go_back()
+
+    def go_back(self):
+        Менеджер_окон.close_window(MyWidget)
 
 
 def except_hook(cls, exception, traceback):

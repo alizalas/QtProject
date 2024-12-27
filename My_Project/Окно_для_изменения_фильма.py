@@ -4,6 +4,7 @@ import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox
 import Базовая_визуализация
+from My_Project import Менеджер_окон
 
 
 class MyWidget(QMainWindow):
@@ -18,25 +19,24 @@ class MyWidget(QMainWindow):
 
         with open("Константы.json", 'r') as file:
             data = json.load(file)
-        self.change = data["change"]
+        self.data = data["change"]
 
-        self.title.setText(self.change[1])
-        self.director.setText(self.change[2])
+        self.title.setText(self.data[1])
+        self.director.setText(self.data[2])
         self.director.setCompleter(Базовая_визуализация.set_compliter(self, "directors"))
-        self.year.setText(self.change[3])
+        self.year.setText(self.data[3])
         spisok1 = [''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()]
         self.genre.addItems(spisok1)
-        self.genre.setCurrentIndex(spisok1.index(self.change[4]))
-        self.duration.setText(self.change[5])
+        self.genre.setCurrentIndex(spisok1.index(self.data[4]))
+        self.duration.setText(self.data[5])
         spisok2 = ['', '1', '2', '3', '4', '5']
         self.rating.addItems(spisok2)
-        self.rating.setCurrentIndex(spisok2.index(self.change[6]))
+        self.rating.setCurrentIndex(spisok2.index(self.data[6]))
+        self.link.setText(self.data[7])
 
-        self.other.clicked.connect(self.add_items)
+        self.other.clicked.connect(self.add_item)
         self.save.clicked.connect(self.save_result)
-
-    def add_items(self):
-        Базовая_визуализация.add_item(self)
+        self.returne.clicked.connect(self.go_back)
 
     def save_result(self):
         if self.title.text():
@@ -74,17 +74,30 @@ class MyWidget(QMainWindow):
         else:
             rating = 'NULL'
 
+        if self.link.text():
+            link = self.link.text()
+        else:
+            link = 'NULL'
+
         query = f"""UPDATE films SET
-        title = '{title}', director = {director}, year = {year}, genre = {genre}, duration = {duration}, rating = {rating} WHERE id = ?"""
-        print(query)
-        self.connection.cursor().execute(query, (int(self.change[0]), ))
+        title = '{title}', director = {director}, year = {year}, genre = {genre}, duration = {duration}, rating = {rating}, link = '{link}' WHERE id = ?"""
+        self.connection.cursor().execute(query, (int(self.data[0]),))
         self.connection.commit()
 
-        QMessageBox.question(self, '', "<i>Фильм с параметрами:</i>" + '<p>' + '<br>'.join([f"<b>название: {self.change[1]}", f"<b>режиссёр:</b> {self.change[2]}", f"<b>год:</b> {self.change[3]}",
-                 f"<b>жанр:</b> {self.change[4]}", f"<b>продолжительность:</b> {self.change[5]}", f"<b>рейтинг:</b> {self.change[6]}"]) + '<p>' + "успешно заменён на <i>фильм с параметрами:</i>" + '<p>' + '<br>'.join(
+        QMessageBox.question(self, '', "<i>Фильм с параметрами:</i>" + '<p>' + '<br>'.join([f"<b>название: {self.data[1]}", f"<b>режиссёр:</b> {self.data[2]}", f"<b>год:</b> {self.data[3]}",
+                 f"<b>жанр:</b> {self.data[4]}", f"<b>продолжительность:</b> {self.data[5]}", f"<b>рейтинг:</b> {self.data[6]}", f"<b>ссылка:</b> {self.data[7]}"]) + '<p>' + "успешно заменён на <i>фильм с параметрами:</i>" + '<p>' + '<br>'.join(
                 [f"<b>название:</b> {self.title.text()}", f"<b>режиссёр:</b> {self.director.text()}", f"<b>год:</b> {self.year.text()}",
-                 f"<b>жанр:</b> {self.genre.currentText()}", f"<b>продолжительность:</b> {self.duration.text()}", f"<b>рейтинг:</b> {self.rating.currentText()}"]))
+                 f"<b>жанр:</b> {self.genre.currentText()}", f"<b>продолжительность:</b> {self.duration.text()}", f"<b>рейтинг:</b> {self.rating.currentText()}", f"<b>ссылка:</b> {self.link.text()}"]))
         self.close()
+
+    def add_item(self):
+        Базовая_визуализация.add_item(self)
+
+    def go_back(self):
+        Менеджер_окон.close_window(MyWidget)
+
+    def closeEvent(self, event):
+        self.connection.close()
 
 
 def except_hook(cls, exception, traceback):

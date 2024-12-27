@@ -4,12 +4,14 @@ from PyQt6 import uic
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox, QLineEdit, QCompleter
 import Базовая_визуализация
+from My_Project import Менеджер_окон
 
 
 class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('add_book.ui', self)
+
         Базовая_визуализация.set_background_image(self)
         Базовая_визуализация.set_font_size(self)
 
@@ -22,31 +24,29 @@ class MyWidget(QMainWindow):
 
         self.other.clicked.connect(self.add_item)
         self.add.clicked.connect(self.add_book)
+        self.returne.clicked.connect(self.go_back)
 
     def add_book(self):
         title = self.title.text()
         author = self.author.text()
         year = self.year.text()
         genre = self.genre.currentText()
+        link = self.link.text()
 
         if title:
-            query = f"INSERT INTO books(title, author, year, genre) VALUES('{title}', "
+            query = f"INSERT INTO books(title, author, year, genre, link) VALUES('{title}', "
         else:
-            query = f"INSERT INTO books(title, author, year, genre) VALUES({''}, "
+            query = f"INSERT INTO books(title, author, year, genre, link) VALUES({'NULL'}, "
 
         if author:
             try:
-                result = int(
-                    self.connection.cursor().execute("select id from authors where name = ?", (author,)).fetchall()[0][
-                        0])
+                result = self.connection.cursor().execute("select id from authors where name = ?", (author,)).fetchall()[0][0]
             except Exception:
                 self.connection.cursor().execute(f"INSERT INTO authors(name) VALUES('{author}')")
                 self.connection.commit()
-                result = int(
-                    self.connection.cursor().execute(f"select id from authors where name = ?", (author,)).fetchall()[0][
-                        0])
+                result = self.connection.cursor().execute(f"select id from authors where name = ?", (author,)).fetchall()[0][0]
             finally:
-                query += f"{result}, "
+                query += f"{int(result)}, "
         else:
             query += f"{'NULL'}, "
 
@@ -56,9 +56,13 @@ class MyWidget(QMainWindow):
             query += f"{'NULL'}, "
 
         if genre:
-            result = int(
-                self.connection.cursor().execute(f"select id from genres where genre = ?", (genre,)).fetchall()[0][0])
-            query += f"{result})"
+            result = self.connection.cursor().execute(f"select id from genres where genre = ?", (genre,)).fetchall()[0][0]
+            query += f"{int(result)}, "
+        else:
+            query += f"{'NULL'}, "
+
+        if link:
+            query += f"'{link}')"
         else:
             query += f"{'NULL'})"
 
@@ -66,11 +70,14 @@ class MyWidget(QMainWindow):
         self.connection.commit()
         QMessageBox.question(
             self, '', "<i>Книга с параметрами:</i>" + '<p>' + '<br>'.join(
-                [f"<b>название:</b> {title}", f"<b>автор:</b> {author}", f"<b>год:</b> {year}", f"<b>жанр:</b> {genre}"]) + '<p>' + "добавлена в каталог")
+                [f"<b>название:</b> {title}", f"<b>автор:</b> {author}", f"<b>год:</b> {year}", f"<b>жанр:</b> {genre}", f"<b>ссылка:</b> {link}"]) + '<p>' + "добавлена в каталог")
         self.close()
 
     def add_item(self):
         Базовая_визуализация.add_item(self)
+
+    def go_back(self):
+        Менеджер_окон.close_window(MyWidget)
 
     def closeEvent(self, event):
         self.connection.close()

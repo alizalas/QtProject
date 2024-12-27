@@ -1,10 +1,8 @@
 import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow
-
-import subprocess
-
-from My_Project import Базовая_визуализация
+from My_Project import Базовая_визуализация, Менеджер_окон, Окно_для_поиска_книг, Окно_для_добавления_книги, \
+    Окно_для_просмотра_авторов, Окно_для_просмотра_жанров
 
 
 class MyWidget(QMainWindow):
@@ -19,18 +17,22 @@ class MyWidget(QMainWindow):
         self.add.clicked.connect(self.click_handling)
         self.listAuthors.clicked.connect(self.click_handling)
         self.listGenres.clicked.connect(self.click_handling)
-        self.returne.clicked.connect(self.close)
+        self.returne.clicked.connect(self.click_handling)
 
     def click_handling(self):
         button_name = self.sender().objectName()
         if button_name == "search":
-            subprocess.run([sys.executable, 'Окно_для_поиска_книг.py'])
-        if button_name == "add":
-            subprocess.run([sys.executable, 'Окно_для_добавления_книги.py'])
-        if button_name == "listAuthors":
-            subprocess.run([sys.executable, 'Окно_для_просмотра_авторов.py'])
+            Менеджер_окон.open_next_window(Окно_для_поиска_книг.MyWidget)
+        elif button_name == "add":
+            Менеджер_окон.open_next_window(Окно_для_добавления_книги.MyWidget)
+        elif button_name == "listAuthors":
+            Менеджер_окон.open_next_window(Окно_для_просмотра_авторов.MyWidget)
+        elif button_name == "listGenres":
+            Базовая_визуализация.modify_variable_in_file({"database": "books"})
+            Менеджер_окон.open_next_window(Окно_для_просмотра_жанров.MyWidget)
         else:
-            subprocess.run([sys.executable, 'Окно_для_просмотра_жанров_книг.py'])
+            Менеджер_окон.close_window(MyWidget)
+
 
 def except_hook(cls, exception, traceback):
     sys.__excepthook__(cls, exception, traceback)

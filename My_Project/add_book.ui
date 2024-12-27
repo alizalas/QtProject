@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>172</width>
-    <height>387</height>
+    <height>442</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -88,11 +88,17 @@
      </widget>
     </item>
     <item>
-     <widget class="QLabel" name="label_3">
+     <widget class="QLabel" name="label_7">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
       <property name="text">
-       <string/>
+       <string>Ссылка на книгу:</string>
       </property>
      </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="link"/>
     </item>
     <item>
      <widget class="QLabel" name="label_4">
@@ -105,6 +111,13 @@
      <widget class="QPushButton" name="add">
       <property name="text">
        <string>Добавить</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="returne">
+      <property name="text">
+       <string>Вернуться назад</string>
       </property>
      </widget>
     </item>

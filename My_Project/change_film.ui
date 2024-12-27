@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>183</width>
-    <height>477</height>
+    <height>532</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
       </property>
       <property name="text">
        <string>Измените в полях ниже данные,
-чтобы редактировать фильм
+чтобы отредактировать фильм
 (Вы можете изменить
 только некоторые из полей):</string>
       </property>
@@ -115,10 +115,16 @@
     </item>
     <item>
      <widget class="QLabel" name="label_4">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
       <property name="text">
-       <string/>
+       <string>Ссылка на фильм:</string>
       </property>
      </widget>
+    </item>
+    <item>
+     <widget class="QLineEdit" name="link"/>
     </item>
     <item>
      <widget class="QLabel" name="label_9">
@@ -131,6 +137,13 @@
      <widget class="QPushButton" name="save">
       <property name="text">
        <string>Сохранить изменения</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="returne">
+      <property name="text">
+       <string>Вернуться назад</string>
       </property>
      </widget>
     </item>

@@ -5,6 +5,7 @@ import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow, QTableWidgetItem
 import Базовая_визуализация
+from My_Project import Менеджер_окон
 
 
 class MyWidget(QMainWindow):
@@ -29,8 +30,9 @@ class MyWidget(QMainWindow):
             button = getattr(self, f'pushButton_{i}')
             button.setMinimumSize(data * 3, data * 3)
             button.clicked.connect(self.selection_by_letter)
+
         self.search.clicked.connect(self.selection_by_characteristics)
-        self.returne.clicked.connect(self.close)
+        self.returne.clicked.connect(self.go_back)
 
     def selection_by_characteristics(self):
         title = self.title.text()
@@ -39,7 +41,8 @@ class MyWidget(QMainWindow):
         genre = self.genre.currentText()
         duration = self.duration.text()
         rating = self.rating.currentText()
-        query = """SELECT films.id, films.title, directors.name, films.year, genres.genre, films.duration, films.rating 
+        link = self.link.text()
+        query = """SELECT films.id, films.title, directors.name, films.year, genres.genre, films.duration, films.rating, films.link 
                      FROM films 
                      LEFT JOIN directors ON directors.id = films.director
                      LEFT JOIN genres ON genres.id = films.genre
@@ -63,10 +66,13 @@ class MyWidget(QMainWindow):
         if rating:
             query += f" AND films.rating = {int(rating)}"
 
+        if link:
+            query += f" AND films.link = '{link}'"
+
         self.realisation(self.connection.cursor().execute(query).fetchall())
 
     def selection_by_letter(self):
-        query = f"""SELECT films.id, films.title, directors.name, films.year, genres.genre, films.duration, films.rating 
+        query = f"""SELECT films.id, films.title, directors.name, films.year, genres.genre, films.duration, films.rating, films.link 
                      FROM films 
                      LEFT JOIN directors ON directors.id = films.director
                      LEFT JOIN genres ON genres.id = films.genre
@@ -74,8 +80,14 @@ class MyWidget(QMainWindow):
         self.realisation(self.connection.cursor().execute(query).fetchall())
 
     def realisation(self, res):
-        headers = ['id', 'название', 'режиссёр', 'год', 'жанр', 'продолжительность', 'рейтинг']
-        Базовая_визуализация.realisation(self, res, headers, 7)
+        headers = ['id', 'название', 'режиссёр', 'год', 'жанр', 'продолжительность', 'рейтинг', 'ссылка']
+        Базовая_визуализация.realisation_with_additional_features(self, res, headers, 8)
+
+    def open_link(self, row, col):
+        Базовая_визуализация.open_link(self, row, col)
+
+    def go_back(self):
+        Менеджер_окон.close_window(MyWidget)
 
     def closeEvent(self, event):
         self.connection.close()

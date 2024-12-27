@@ -1,10 +1,8 @@
 import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow
-
-import subprocess
-
-from My_Project import Базовая_визуализация
+from My_Project import Базовая_визуализация, Менеджер_окон, Окно_для_поиска_фильмов, Окно_для_добавления_фильма, \
+    Окно_для_просмотра_режиссёров, Окно_для_просмотра_жанров
 
 
 class MyWidget(QMainWindow):
@@ -17,13 +15,23 @@ class MyWidget(QMainWindow):
 
         self.search.clicked.connect(self.click_handling)
         self.add.clicked.connect(self.click_handling)
+        self.listDirectors.clicked.connect(self.click_handling)
+        self.listGenres.clicked.connect(self.click_handling)
+        self.returne.clicked.connect(self.click_handling)
 
     def click_handling(self):
         button_name = self.sender().objectName()
         if button_name == "search":
-            subprocess.run([sys.executable, 'Окно_для_поиска_фильмов.py'])
+            Менеджер_окон.open_next_window(Окно_для_поиска_фильмов.MyWidget)
+        elif button_name == "add":
+            Менеджер_окон.open_next_window(Окно_для_добавления_фильма.MyWidget)
+        elif button_name == "listDirectors":
+            Менеджер_окон.open_next_window(Окно_для_просмотра_режиссёров.MyWidget)
+        elif button_name == "listGenres":
+            Базовая_визуализация.modify_variable_in_file({"database": "films"})
+            Менеджер_окон.open_next_window(Окно_для_просмотра_жанров.MyWidget)
         else:
-            subprocess.run([sys.executable, 'Окно_для_добавления_фильма.py'])
+            Менеджер_окон.close_window(MyWidget)
 
 
 def except_hook(cls, exception, traceback):

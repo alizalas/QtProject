@@ -5,6 +5,7 @@ import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow
 import Базовая_визуализация
+from My_Project import Менеджер_окон
 
 
 class MyWidget(QMainWindow):
@@ -28,15 +29,17 @@ class MyWidget(QMainWindow):
             button = getattr(self, f'pushButton_{i}')
             button.setMinimumSize(data * 3, data * 3)
             button.clicked.connect(self.selection_by_letter)
+
         self.search.clicked.connect(self.selection_by_characteristics)
-        self.returne.clicked.connect(self.close)
+        self.returne.clicked.connect(self.go_back)
 
     def selection_by_characteristics(self):
         title = self.title.text()
         author = self.author.text()
         year = self.year.text()
         genre = self.genre.currentText()
-        query = """SELECT books.id, books.title, authors.name, books.year, genres.genre 
+        link = self.link.text()
+        query = """SELECT books.id, books.title, authors.name, books.year, genres.genre, books.link 
                    FROM books 
                    LEFT JOIN authors ON authors.id = books.author
                    LEFT JOIN genres ON genres.id = books.genre
@@ -54,10 +57,13 @@ class MyWidget(QMainWindow):
         if genre:
             query += f" AND genres.genre = '{genre}'"
 
+        if link:
+            query += f" AND books.link = '{link}'"
+
         self.realisation(self.connection.cursor().execute(query).fetchall())
 
     def selection_by_letter(self):
-        query = f"""SELECT books.id, books.title, authors.name, books.year, genres.genre 
+        query = f"""SELECT books.id, books.title, authors.name, books.year, genres.genre, books.link 
                      FROM books 
                      LEFT JOIN authors ON authors.id = books.author
                      LEFT JOIN genres ON genres.id = books.genre
@@ -65,8 +71,14 @@ class MyWidget(QMainWindow):
         self.realisation(self.connection.cursor().execute(query).fetchall())
 
     def realisation(self, res):
-        headers = ['id', 'название', 'автор', 'год', 'жанр']
-        Базовая_визуализация.realisation(self, res, headers, 5)
+        headers = ['id', 'название', 'автор', 'год', 'жанр', 'ссылка']
+        Базовая_визуализация.realisation_with_additional_features(self, res, headers, 6)
+
+    def open_link(self, row, col):
+        Базовая_визуализация.open_link(self, row, col)
+
+    def go_back(self):
+        Менеджер_окон.close_window(MyWidget)
 
     def closeEvent(self, event):
         self.connection.close()

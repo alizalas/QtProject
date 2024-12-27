@@ -1,11 +1,13 @@
+import csv
 import json
-import subprocess
+#import subprocess
 import sys
-
-from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QFont
+from PyQt6.QtCore import Qt, QUrl
+from PyQt6.QtGui import QFont, QDesktopServices
 from PyQt6.QtWidgets import QWidget, QMessageBox, QTableWidgetItem, QPushButton, QCompleter, QFileDialog
 import datetime
+
+from My_Project import Менеджер_окон, Окно_добавления_значения, Окно_для_изменения_фильма, Окно_для_изменения_книги
 
 
 def set_font_size(self):
@@ -61,15 +63,15 @@ def set_background_image(self):
 
 
 def add_item(self):
-    subprocess.run([sys.executable, 'Окно_добавления_значения.py'])
+    Менеджер_окон.open_next_window(Окно_добавления_значения.MyWidget)
     with open("Константы.json", 'r') as file:
-        data = json.load(file)
-    self.genre.addItems([str(data["signalText"])])
-    self.connection.cursor().execute(f"INSERT INTO genres(genre) VALUES('{data['signalText']}')")
+        data = json.load(file)["signalText"]
+    self.genre.addItems([str(data)])
+    self.connection.cursor().execute(f"INSERT INTO genres(genre) VALUES('{data}')")
     self.connection.commit()
 
 
-def realisation(self, res, headers, col_num):
+def realisation_with_additional_features(self, res, headers, col_num):
     if res:
         self.tableWidget.setColumnCount(col_num + 2)
         self.tableWidget.setRowCount(0)
@@ -93,33 +95,44 @@ def realisation(self, res, headers, col_num):
 
             for j, elem in enumerate(row):
                 self.tableWidget.setItem(
-                    i, j, QTableWidgetItem(str(elem) if elem else ''))
+                    i, j, QTableWidgetItem(str(elem) if elem and elem != 'NULL' else ''))
 
         self.tableWidget.resizeColumnsToContents()
+
+        self.tableWidget.cellClicked.connect(self.open_link)
     else:
-        self.statusBar().showMessage('Ничего не нашлось')
+        self.statusBar().setStyleSheet("background-color: white; color: red;")
+        self.statusBar().showMessage('Ничего не нашлось', 3000)
+        QMessageBox.question(self, '', "Ничего не нашлось")
+
+
+def open_link(self, row, col):
+    print(row, col)
+    if col == self.tableWidget.columnCount() - 3:
+        item = self.tableWidget.item(row, col)
+        if item:
+            link = LinkItem(item.text())
+            QDesktopServices.openUrl(QUrl(link.link))
 
 
 def edit_row(self, num, col_num):
-    print(f"Редактирование в строке {num}")
     row_values = [self.tableWidget.item(num, col).text() for col in range(col_num)]
     modify_variable_in_file({"change": row_values})
-    if len(row_values) == 7:
-        subprocess.run([sys.executable, 'Окно_для_изменения_фильма.py'])
+    if len(row_values) == 8:
+        Менеджер_окон.open_next_window(Окно_для_изменения_фильма.MyWidget)
     else:
-        subprocess.run([sys.executable, 'Окно_для_изменения_книги.py'])
+        Менеджер_окон.open_next_window(Окно_для_изменения_книги.MyWidget)
 
 
 def delete_row(self, num, col_num):
-    print(f"Удаление в строке {num}")
     row_values = [self.tableWidget.item(num, col).text() for col in range(col_num)]
-    if len(row_values) == 7:
+    if len(row_values) == 8:
         valid = QMessageBox.question(
             self, '', "Действительно удалить <i>фильм с параметрами:</i>" + '<p>' + '<br>'.join(
                 [f"<b>название:</b> {row_values[1]}", f"<b>режиссёр:</b> {row_values[2]}",
                  f"<b>год:</b> {row_values[3]}",
                  f"<b>жанр:</b> {row_values[4]}", f"<b>продолжительность:</b> {row_values[5]}",
-                 f"<b>рейтинг:</b> {row_values[6]}?"]),
+                 f"<b>рейтинг:</b> {row_values[6]}", f"<b>ссылка:</b> {row_values[7]}?"]),
             buttons=QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
         if valid == QMessageBox.StandardButton.Yes:
             self.tableWidget.removeRow(num)
@@ -129,7 +142,7 @@ def delete_row(self, num, col_num):
         valid = QMessageBox.question(
             self, '', "Действительно удалить <i>книгу с параметрами:</i>" + '<p>' + '<br>'.join(
                 [f"<b>название:</b> {row_values[1]}", f"<b>автор:</b> {row_values[2]}", f"<b>год:</b> {row_values[3]}",
-                 f"<b>жанр:</b> {row_values[4]}?"]),
+                 f"<b>жанр:</b> {row_values[4]}", f"<b>ссылка:</b> {row_values[5]}?"]),
             buttons=QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
         if valid == QMessageBox.StandardButton.Yes:
             self.tableWidget.removeRow(num)
@@ -137,11 +150,45 @@ def delete_row(self, num, col_num):
             self.connection.commit()
 
 
+def simple_realisation(self, res, headers, col_num):
+    if res:
+        self.tableWidget.setColumnCount(col_num)
+        self.tableWidget.setRowCount(0)
+        self.tableWidget.setHorizontalHeaderLabels(headers)
+
+        for i, row in enumerate(res):
+            self.tableWidget.setRowCount(
+                self.tableWidget.rowCount() + 1)
+
+            for j, elem in enumerate(row):
+                self.tableWidget.setItem(
+                    i, j, QTableWidgetItem(str(elem) if elem and elem != 'NULL' else ''))
+
+        self.tableWidget.resizeColumnsToContents()
+    else:
+        self.statusBar().showMessage('Ничего не нашлось')
+
 def select_folder(self, file_name):
     folder_path = QFileDialog.getExistingDirectory(self, 'Выберите папку', options=QFileDialog.Option.ShowDirsOnly)
     if folder_path:
         file_path = f"{folder_path}/{file_name}({datetime.datetime.now().strftime('%d-%m-%Y_%H-%M')}).csv"
         return file_path
+
+
+def make_csv(self, file_path, data, headers):
+    if data:
+        with open(file_path, 'w', newline='', encoding="utf8") as csvfile:
+            writer = csv.writer(
+                csvfile, delimiter=';', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+            writer.writerow(headers)
+            for row in data:
+                writer.writerow(list(row))
+
+        QMessageBox.question(self, '', f"Данные из выбранной Вами таблицы <b>успешно сохранены</b> по <i>пути</i>:<p>{file_path}")
+
+    else:
+        QMessageBox.question(self, '', "В выбранной Вами таблице <b>нет данных</b>")
+    self.go_back()
 
 
 def modify_variable_in_file(new_value):
@@ -161,3 +208,14 @@ def set_compliter(self, table):
     completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
     completer.setFilterMode(Qt.MatchFlag.MatchContains)
     return completer
+
+
+class LinkItem(QTableWidgetItem):
+    def __init__(self, link):
+        super().__init__()
+        self.link = link
+
+    def data(self, role):
+        if role == Qt.ItemDataRole.DisplayRole:
+            return f'<a href="{self.link}"></a>'
+        return super().data(role)

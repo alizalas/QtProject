@@ -4,12 +4,14 @@ import sys
 from PyQt6 import uic
 from PyQt6.QtWidgets import QApplication, QMainWindow, QMessageBox
 import Базовая_визуализация
+from My_Project import Менеджер_окон
 
 
 class MyWidget(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('change_book.ui', self)
+
         Базовая_визуализация.set_background_image(self)
         Базовая_визуализация.set_font_size(self)
 
@@ -17,21 +19,20 @@ class MyWidget(QMainWindow):
 
         with open("Константы.json", 'r') as file:
             data = json.load(file)
-        self.change = data["change"]
+        self.data = data["change"]
 
-        self.title.setText(self.change[1])
-        self.author.setText(self.change[2])
+        self.title.setText(self.data[1])
+        self.author.setText(self.data[2])
         self.author.setCompleter(Базовая_визуализация.set_compliter(self, "authors"))
-        self.year.setText(self.change[3])
+        self.year.setText(self.data[3])
         spisok = [''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()]
         self.genre.addItems(spisok)
-        self.genre.setCurrentIndex(spisok.index(self.change[4]))
+        self.genre.setCurrentIndex(spisok.index(self.data[4]))
+        self.link.setText(self.data[5])
 
-        self.other.clicked.connect(self.add_items)
+        self.other.clicked.connect(self.add_item)
         self.save.clicked.connect(self.save_result)
-
-    def add_items(self):
-        Базовая_визуализация.add_item(self)
+        self.returne.clicked.connect(self.go_back)
 
     def save_result(self):
         if self.title.text():
@@ -42,15 +43,13 @@ class MyWidget(QMainWindow):
         if self.author.text():
             try:
                 author = int(
-                    self.connection.cursor().execute("SELECT id FROM authors where name = ?", (self.author.text(),)).fetchall()[
-                        0][0])
+                    self.connection.cursor().execute("SELECT id FROM authors where name = ?", (self.author.text(),)).fetchall()[0][0])
             except Exception:
                 self.connection.cursor().execute(f"INSERT INTO authors(name) VALUES('{self.author.text()}')")
                 self.connection.commit()
                 author = int(
                     self.connection.cursor().execute("SELECT id FROM authors where name = ?",
-                                                     (self.author.text(),)).fetchall()[
-                        0][0])
+                                                     (self.author.text(),)).fetchall()[0][0])
         else:
             author = 'NULL'
 
@@ -65,18 +64,30 @@ class MyWidget(QMainWindow):
         else:
             genre = 'NULL'
 
+        if self.link.text():
+            link = self.link.text()
+        else:
+            link = 'NULL'
+
         query = f"""UPDATE books SET
-        title = '{title}', author = {author}, year = {year}, genre = {genre} WHERE id = ?"""
-        print(query)
-        self.connection.cursor().execute(query, (int(self.change[0]),))
+        title = '{title}', author = {author}, year = {year}, genre = {genre}, link = '{link}' WHERE id = ?"""
+        self.connection.cursor().execute(query, (int(self.data[0]),))
         self.connection.commit()
 
         QMessageBox.question(
             self, '', "<i>Книга с параметрами:</i>" + '<p>' + '<br>'.join(
-                [f"<b>название:</b> {self.change[1]}", f"<b>автор:</b> {self.change[2]}", f"<b>год:</b> {self.change[3]}", f"<b>жанр:</b> {self.change[4]}"]) + '<p>' +
+                [f"<b>название:</b> {self.data[1]}", f"<b>автор:</b> {self.data[2]}", f"<b>год:</b> {self.data[3]}", f"<b>жанр:</b> {self.data[4]}", f"<b>ссылка:</b> {self.data[5]}"]) + '<p>' +
                  "успешно заменена на <i>книгу с параметрами:</i>" + '<p>' + '<br>'.join(
-                [f"<b>название:</b> {self.title.text()}", f"<b>автор:</b> {self.author.text()}", f"<b>год:</b> {self.year.text()}", f"<b>жанр:</b> {self.genre.currentText()}"]))
+                [f"<b>название:</b> {self.title.text()}", f"<b>автор:</b> {self.author.text()}", f"<b>год:</b> {self.year.text()}", f"<b>жанр:</b> {self.genre.currentText()}", f"<b>ссылка:</b> {self.link.text()}"]))
         self.close()
+
+    def add_item(self):
+        Базовая_визуализация.add_item(self)
+
+    def go_back(self):
+        Менеджер_окон.close_window(MyWidget)
+    def closeEvent(self, event):
+        self.connection.close()
 
 
 def except_hook(cls, exception, traceback):

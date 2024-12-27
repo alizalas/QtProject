@@ -6,6 +6,7 @@ from PyQt6.QtGui import QPixmap, QPainter
 from PyQt6.QtWidgets import QApplication, QMainWindow, QGraphicsScene, QGraphicsPixmapItem, QGraphicsView, QColorDialog, \
     QMessageBox
 import Базовая_визуализация
+from My_Project import Менеджер_окон
 
 
 class MyWidget(QMainWindow):
@@ -15,10 +16,10 @@ class MyWidget(QMainWindow):
 
         with open("Константы.json", 'r') as file:
             data = json.load(file)
+
         self.changeFont.setValue(data["font"])
         self.color = data["color"]
 
-        print(data["background_picture"])
         if data["background_picture"] == "image_1.png":
             self.radioButton_1.setChecked(True)
         elif data["background_picture"] == "image_2.png":
@@ -33,8 +34,8 @@ class MyWidget(QMainWindow):
             self.radioButton_6.setChecked(True)
 
         self.changeColor.clicked.connect(self.change_color)
-        self.save.clicked.connect(self.save_results)
-        self.returne.clicked.connect(self.close)
+        self.save.clicked.connect(self.save_result)
+        self.returne.clicked.connect(self.go_back)
 
         # Создаём QGraphicsScene
         self.scene_1 = QGraphicsScene()
@@ -64,9 +65,9 @@ class MyWidget(QMainWindow):
         Базовая_визуализация.set_font_size(self)
         Базовая_визуализация.set_font_color(self)
 
-    def load_image(self, image_path, n):
+    def load_image(self, image_path, number):
         # Настройка масштабирования (по желанию)
-        graphics_view = getattr(self, f'image_{n}')
+        graphics_view = getattr(self, f'image_{number}')
         graphics_view.setRenderHint(QPainter.RenderHint.Antialiasing)
         graphics_view.setDragMode(QGraphicsView.DragMode.ScrollHandDrag)
         graphics_view.setResizeAnchor(QGraphicsView.ViewportAnchor.AnchorUnderMouse)
@@ -75,17 +76,16 @@ class MyWidget(QMainWindow):
         pixmap = QPixmap(image_path)
         # Создаём QGraphicsPixmapItem и добавляем в сцену
         pixmap_item = QGraphicsPixmapItem(pixmap)
-        scene = getattr(self, f'scene_{n}')
+        scene = getattr(self, f'scene_{number}')
         scene.addItem(pixmap_item)
 
     def change_color(self):
         color = QColorDialog.getColor()
-        if color.isValid():  # Проверяем, был ли выбран цвет
+        if color.isValid():
             self.color = color.name()
             self.changeColor.setStyleSheet(f"QPushButton {{ color: rgb(255, 255, 255); background-color: {color.name()}; }}")
 
-
-    def save_results(self):
+    def save_result(self):
         if self.radioButton_1.isChecked():
             Базовая_визуализация.modify_variable_in_file({"background_picture": "image_1.png"})
         elif self.radioButton_2.isChecked():
@@ -108,7 +108,11 @@ class MyWidget(QMainWindow):
         QMessageBox.question(
             self, '', "Перезапустите приложение, чтобы все изменения <b>отобразились корректно</b>")
 
-        self.close()
+        self.go_back()
+
+    def go_back(self):
+        Менеджер_окон.close_window(MyWidget)
+
 
 def except_hook(cls, exception, traceback):
     sys.__excepthook__(cls, exception, traceback)
