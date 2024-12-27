@@ -9,13 +9,13 @@ class MyWidget(QMainWindow):
         super().__init__()
         uic.loadUi('reference.ui', self)
 
-        Базовая_визуализация.set_background_image(self)
-        Базовая_визуализация.set_font_size(self)
+        Basic_visualization.set_background_image(self)
+        Basic_visualization.set_font_size(self)
 
         self.returne.clicked.connect(self.go_back)
 
     def go_back(self):
-        Менеджер_окон.close_window(MyWidget)
+        Window_manager.close_window(MyWidget)
 
 
 def except_hook(cls, exception, traceback):

@@ -11,8 +11,8 @@ class MyWidget(QMainWindow):
         super().__init__()
         uic.loadUi('first_window.ui', self)
 
-        Базовая_визуализация.set_background_image(self)
-        Базовая_визуализация.set_font_size(self)
+        Basic_visualization.set_background_image(self)
+        Basic_visualization.set_font_size(self)
 
         self.setWindowTitle("Начальное окно")
         self.books.setToolTip("Здесь можно работать с каталогом <b>книг</b>")
@@ -33,26 +33,26 @@ class MyWidget(QMainWindow):
         self.films_scv.clicked.connect(self.open_next_window)
 
         self._allow_close = False
-        Менеджер_окон.save_window(MyWidget, self)
+        Window_manager.save_window(MyWidget, self)
 
     def open_next_window(self):
         button_name = self.sender().objectName()
         if button_name == "books":
-            Менеджер_окон.open_next_window(Окно_выбора_действий_над_книгами.MyWidget)
+            Window_manager.open_next_window(Окно_выбора_действий_над_книгами.MyWidget)
         elif button_name == "films":
-            Менеджер_окон.open_next_window(Окно_выбора_действий_над_фильмами.MyWidget)
+            Window_manager.open_next_window(Окно_выбора_действий_над_фильмами.MyWidget)
         elif button_name == "reference":
-            Менеджер_окон.open_next_window(Окно_справки.MyWidget)
+            Window_manager.open_next_window(Окно_справки.MyWidget)
         elif button_name == "settings":
-            Менеджер_окон.open_next_window(Окно_настроек.MyWidget)
+            Window_manager.open_next_window(Окно_настроек.MyWidget)
         elif button_name == "books_scv":
-            Менеджер_окон.open_next_window(Окно_выбора_действий_над_книгами_csv.MyWidget)
+            Window_manager.open_next_window(Окно_выбора_действий_над_книгами_csv.MyWidget)
         else:
-            Менеджер_окон.open_next_window(Окно_выбора_действий_над_фильмами_csv.MyWidget)
+            Window_manager.open_next_window(Окно_выбора_действий_над_фильмами_csv.MyWidget)
 
     def exit_the_application(self):
         self._allow_close = True
-        Менеджер_окон.close_all_windows()
+        Window_manager.close_all_windows()
 
     def closeEvent(self, event):
         if self._allow_close:

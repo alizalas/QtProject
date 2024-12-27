@@ -11,8 +11,8 @@ class MyWidget(QMainWindow):
         super().__init__()
         uic.loadUi('select_directors.ui', self)
 
-        Базовая_визуализация.set_background_image(self)
-        Базовая_визуализация.set_font_size(self)
+        Basic_visualization.set_background_image(self)
+        Basic_visualization.set_font_size(self)
 
         self.connection = sqlite3.connect("My_films.sqlite")
 
@@ -38,10 +38,10 @@ class MyWidget(QMainWindow):
 
     def realisation(self, res):
         headers = ['id', 'режиссёр']
-        Базовая_визуализация.simple_realisation(self, res, headers, 2)
+        Basic_visualization.simple_realisation(self, res, headers, 2)
 
     def go_back(self):
-        Менеджер_окон.close_window(MyWidget)
+        Window_manager.close_window(MyWidget)
 
     def closeEvent(self, event):
         self.connection.close()

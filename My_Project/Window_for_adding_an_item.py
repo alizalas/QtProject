@@ -9,18 +9,18 @@ class MyWidget(QMainWindow):
         super().__init__()
         uic.loadUi('add_item.ui', self)
 
-        Базовая_визуализация.set_background_image(self)
-        Базовая_визуализация.set_font_size(self)
+        Basic_visualization.set_background_image(self)
+        Basic_visualization.set_font_size(self)
 
         self.set.clicked.connect(self.set_item)
         self.returne.clicked.connect(self.go_back)
 
     def set_item(self):
-        Базовая_визуализация.modify_variable_in_file({"signalText": self.lineEdit.text()})
+        Basic_visualization.modify_variable_in_file({"signalText": self.lineEdit.text()})
         self.go_back()
 
     def go_back(self):
-        Менеджер_окон.close_window(MyWidget)
+        Window_manager.close_window(MyWidget)
 
 
 def except_hook(cls, exception, traceback):

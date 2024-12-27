@@ -10,12 +10,12 @@ class MyWidget(QMainWindow):
         super().__init__()
         uic.loadUi('add_film.ui', self)
 
-        Базовая_визуализация.set_background_image(self)
-        Базовая_визуализация.set_font_size(self)
+        Basic_visualization.set_background_image(self)
+        Basic_visualization.set_font_size(self)
 
         self.connection = sqlite3.connect("My_films.sqlite")
 
-        self.director.setCompleter(Базовая_визуализация.set_compliter(self, "directors"))
+        self.director.setCompleter(Basic_visualization.set_compliter(self, "directors"))
         self.genre.addItems(
             [''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()])
         self.rating.addItems(['', '1', '2', '3', '4', '5'])
@@ -90,10 +90,10 @@ class MyWidget(QMainWindow):
         self.close()
 
     def add_item(self):
-        Базовая_визуализация.add_item(self)
+        Basic_visualization.add_item(self)
 
     def go_back(self):
-        Менеджер_окон.close_window(MyWidget)
+        Window_manager.close_window(MyWidget)
 
     def closeEvent(self, event):
         self.connection.close()

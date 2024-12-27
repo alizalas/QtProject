@@ -53,7 +53,7 @@ def set_background_image(self):
 
 
 def add_item(self):
-    Менеджер_окон.open_next_window(Окно_добавления_значения.MyWidget)
+    Window_manager.open_next_window(Window_for_adding_an_item.MyWidget)
 
     with open("Constants.json", 'r') as file:
         data = json.load(file)["signalText"]
@@ -110,9 +110,9 @@ def edit_row(self, num, col_num):
     modify_variable_in_file({"change": row_values})
 
     if len(row_values) == 8:
-        Менеджер_окон.open_next_window(Окно_для_изменения_фильма.MyWidget)
+        Window_manager.open_next_window(Window_for_changing_film.MyWidget)
     else:
-        Менеджер_окон.open_next_window(Окно_для_изменения_книги.MyWidget)
+        Window_manager.open_next_window(Window_for_changing_book.MyWidget)
 
 
 def delete_row(self, num, col_num):

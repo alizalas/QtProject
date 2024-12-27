@@ -10,8 +10,8 @@ class MyWidget(QMainWindow):
         super().__init__()
         uic.loadUi('select_action_for_books-csv.ui', self)
 
-        Базовая_визуализация.set_background_image(self)
-        Базовая_визуализация.set_font_size(self)
+        Basic_visualization.set_background_image(self)
+        Basic_visualization.set_font_size(self)
 
         self.connection = sqlite3.connect("My_books.sqlite")
 
@@ -20,28 +20,28 @@ class MyWidget(QMainWindow):
 
     def choice_folder(self):
         if self.books.isChecked():
-            file_path = Базовая_визуализация.select_folder(self, "books-csv")
+            file_path = Basic_visualization.select_folder(self, "books-csv")
             data = self.connection.cursor().execute("SELECT * FROM books").fetchall()
             headers = ['id', 'название', 'автор', 'год', 'жанр', 'ссылка']
-            Базовая_визуализация.make_csv(self, file_path, data, headers)
+            Basic_visualization.make_csv(self, file_path, data, headers)
 
         elif self.authors.isChecked():
-            file_path = Базовая_визуализация.select_folder(self, "authors-csv")
+            file_path = Basic_visualization.select_folder(self, "authors-csv")
             data = self.connection.cursor().execute("SELECT * FROM authors").fetchall()
             headers = ['id', 'автор']
-            Базовая_визуализация.make_csv(self, file_path, data, headers)
+            Basic_visualization.make_csv(self, file_path, data, headers)
 
         elif self.genres.isChecked():
-            file_path = Базовая_визуализация.select_folder(self, "genres-csv")
+            file_path = Basic_visualization.select_folder(self, "genres-csv")
             data = self.connection.cursor().execute("SELECT * FROM genres").fetchall()
             headers = ['id', 'жанр']
-            Базовая_визуализация.make_csv(self, file_path, data, headers)
+            Basic_visualization.make_csv(self, file_path, data, headers)
 
         else:
             QMessageBox.question(self, '', "Вы <b>не выбрали таблицу</b>, из которой хотите импортитовать данные")
 
     def go_back(self):
-        Менеджер_окон.close_window(MyWidget)
+        Window_manager.close_window(MyWidget)
 
     def closeEvent(self, event):
         self.connection.close()

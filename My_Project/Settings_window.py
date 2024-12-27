@@ -60,8 +60,8 @@ class MyWidget(QMainWindow):
         self.image_6.setScene(self.scene_6)
         self.load_image("image_6.png", 6)
 
-        Базовая_визуализация.set_font_size(self)
-        Базовая_визуализация.set_font_color(self)
+        Basic_visualization.set_font_size(self)
+        Basic_visualization.set_font_color(self)
 
     def load_image(self, image_path, number):
         # Настройка масштабирования (по желанию)
@@ -86,23 +86,23 @@ class MyWidget(QMainWindow):
 
     def save_result(self):
         if self.radioButton_1.isChecked():
-            Базовая_визуализация.modify_variable_in_file({"background_picture": "image_1.png"})
+            Basic_visualization.modify_variable_in_file({"background_picture": "image_1.png"})
         elif self.radioButton_2.isChecked():
-            Базовая_визуализация.modify_variable_in_file({"background_picture": "image_2.png"})
+            Basic_visualization.modify_variable_in_file({"background_picture": "image_2.png"})
         elif self.radioButton_3.isChecked():
-            Базовая_визуализация.modify_variable_in_file({"background_picture": "image_3.png"})
+            Basic_visualization.modify_variable_in_file({"background_picture": "image_3.png"})
         elif self.radioButton_4.isChecked():
-            Базовая_визуализация.modify_variable_in_file({"background_picture": "image_4.png"})
+            Basic_visualization.modify_variable_in_file({"background_picture": "image_4.png"})
         elif self.radioButton_5.isChecked():
-            Базовая_визуализация.modify_variable_in_file({"background_picture": "image_5.png"})
+            Basic_visualization.modify_variable_in_file({"background_picture": "image_5.png"})
         elif self.radioButton_6.isChecked():
-            Базовая_визуализация.modify_variable_in_file({"background_picture": "image_6.png"})
+            Basic_visualization.modify_variable_in_file({"background_picture": "image_6.png"})
 
-        Базовая_визуализация.modify_variable_in_file({"font": self.changeFont.value()})
-        Базовая_визуализация.modify_variable_in_file({"color": self.color})
+        Basic_visualization.modify_variable_in_file({"font": self.changeFont.value()})
+        Basic_visualization.modify_variable_in_file({"color": self.color})
 
-        Базовая_визуализация.set_font_size(self)
-        Базовая_визуализация.set_font_color(self)
+        Basic_visualization.set_font_size(self)
+        Basic_visualization.set_font_color(self)
 
         QMessageBox.question(
             self, '', "Перезапустите приложение, чтобы все изменения <b>отобразились корректно</b>")
@@ -110,7 +110,7 @@ class MyWidget(QMainWindow):
         self.go_back()
 
     def go_back(self):
-        Менеджер_окон.close_window(MyWidget)
+        Window_manager.close_window(MyWidget)
 
 
 def except_hook(cls, exception, traceback):

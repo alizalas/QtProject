@@ -11,12 +11,12 @@ class MyWidget(QMainWindow):
         super().__init__()
         uic.loadUi('select_books.ui', self)
 
-        Базовая_визуализация.set_background_image(self)
-        Базовая_визуализация.set_font_size(self)
+        Basic_visualization.set_background_image(self)
+        Basic_visualization.set_font_size(self)
 
         self.connection = sqlite3.connect("My_books.sqlite")
 
-        self.author.setCompleter(Базовая_визуализация.set_compliter(self, "authors"))
+        self.author.setCompleter(Basic_visualization.set_compliter(self, "authors"))
         self.genre.addItems(
             [''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()])
 
@@ -70,13 +70,13 @@ class MyWidget(QMainWindow):
 
     def realisation(self, res):
         headers = ['id', 'название', 'автор', 'год', 'жанр', 'ссылка']
-        Базовая_визуализация.realisation_with_additional_features(self, res, headers, 6)
+        Basic_visualization.realisation_with_additional_features(self, res, headers, 6)
 
     def open_link(self, row, col):
-        Базовая_визуализация.open_link(self, row, col)
+        Basic_visualization.open_link(self, row, col)
 
     def go_back(self):
-        Менеджер_окон.close_window(MyWidget)
+        Window_manager.close_window(MyWidget)
 
     def closeEvent(self, event):
         self.connection.close()

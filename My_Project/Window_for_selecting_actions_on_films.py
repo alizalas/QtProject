@@ -10,8 +10,8 @@ class MyWidget(QMainWindow):
         super().__init__()
         uic.loadUi('select_action_for_films.ui', self)
 
-        Базовая_визуализация.set_background_image(self)
-        Базовая_визуализация.set_font_size(self)
+        Basic_visualization.set_background_image(self)
+        Basic_visualization.set_font_size(self)
 
         self.search.clicked.connect(self.click_handling)
         self.add.clicked.connect(self.click_handling)
@@ -22,16 +22,16 @@ class MyWidget(QMainWindow):
     def click_handling(self):
         button_name = self.sender().objectName()
         if button_name == "search":
-            Менеджер_окон.open_next_window(Окно_для_поиска_фильмов.MyWidget)
+            Window_manager.open_next_window(Окно_для_поиска_фильмов.MyWidget)
         elif button_name == "add":
-            Менеджер_окон.open_next_window(Окно_для_добавления_фильма.MyWidget)
+            Window_manager.open_next_window(Окно_для_добавления_фильма.MyWidget)
         elif button_name == "listDirectors":
-            Менеджер_окон.open_next_window(Окно_для_просмотра_режиссёров.MyWidget)
+            Window_manager.open_next_window(Окно_для_просмотра_режиссёров.MyWidget)
         elif button_name == "listGenres":
-            Базовая_визуализация.modify_variable_in_file({"database": "films"})
-            Менеджер_окон.open_next_window(Окно_для_просмотра_жанров.MyWidget)
+            Basic_visualization.modify_variable_in_file({"database": "films"})
+            Window_manager.open_next_window(Окно_для_просмотра_жанров.MyWidget)
         else:
-            Менеджер_окон.close_window(MyWidget)
+            Window_manager.close_window(MyWidget)
 
 
 def except_hook(cls, exception, traceback):

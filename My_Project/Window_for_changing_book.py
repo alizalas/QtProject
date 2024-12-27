@@ -11,8 +11,8 @@ class MyWidget(QMainWindow):
         super().__init__()
         uic.loadUi('change_book.ui', self)
 
-        Базовая_визуализация.set_background_image(self)
-        Базовая_визуализация.set_font_size(self)
+        Basic_visualization.set_background_image(self)
+        Basic_visualization.set_font_size(self)
 
         self.connection = sqlite3.connect("My_books.sqlite")
 
@@ -22,7 +22,7 @@ class MyWidget(QMainWindow):
 
         self.title.setText(self.data[1])
         self.author.setText(self.data[2])
-        self.author.setCompleter(Базовая_визуализация.set_compliter(self, "authors"))
+        self.author.setCompleter(Basic_visualization.set_compliter(self, "authors"))
         self.year.setText(self.data[3])
         spisok = [''] + [el[0] for el in self.connection.cursor().execute("SELECT genre FROM genres").fetchall()]
         self.genre.addItems(spisok)
@@ -85,10 +85,10 @@ class MyWidget(QMainWindow):
         self.close()
 
     def add_item(self):
-        Базовая_визуализация.add_item(self)
+        Basic_visualization.add_item(self)
 
     def go_back(self):
-        Менеджер_окон.close_window(MyWidget)
+        Window_manager.close_window(MyWidget)
 
     def closeEvent(self, event):
         self.connection.close()
